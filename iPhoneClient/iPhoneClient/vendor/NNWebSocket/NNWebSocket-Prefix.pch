@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'NNWebSocket' target in the 'NNWebSocket' project
-//
-
-#ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-#endif
