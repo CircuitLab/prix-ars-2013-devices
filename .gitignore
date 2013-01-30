@@ -1,4 +1,4 @@
-PhoneClient/iPhoneClient/NNSocketIO/
-PhoneClient/iPhoneClient/vendor/
-PhoneClient/iPhoneClient.xcodeproj/xcuserdata/
-PhoneClient/iPhoneClient.xcodeproj/project.xcworkspace/
+iPhoneClient/iPhoneClient/NNSocketIO/
+iPhoneClient/iPhoneClient/vendor/
+iPhoneClient/iPhoneClient.xcodeproj/xcuserdata
+iPhoneClient/iPhoneClient.xcodeproj/project.xcworkspace
