@@ -10,6 +10,7 @@
 #import "AudioSignalAnalyzer.h"
 #import "FSKSerialGenerator.h"
 #import "FSKRecognizer.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface iPhoneClientViewController ()
 
@@ -26,6 +27,9 @@
 @synthesize analyzer;
 @synthesize generator;
 @synthesize recognizer;
+
+@synthesize stillImageOutput;
+@synthesize captureSession;
 
 NSString * hostname = @"http://moxus.local";
 NSString * portNum = @"3000";
@@ -62,6 +66,8 @@ NSString * portNum = @"3000";
 	analyzer = [[AudioSignalAnalyzer alloc] init];
 	[analyzer addRecognizer:recognizer];
     self.serialTextField.delegate = self;
+    
+    [self takePhoto];
 }
 
 - (void)didReceiveMemoryWarning
@@ -146,6 +152,8 @@ NSString * portNum = @"3000";
 	}
 }
 
+
+#pragma Camera
 - (void)inputIsAvailableChanged:(BOOL)isInputAvailable
 {
 	NSLog(@"inputIsAvailableChanged %d",isInputAvailable);
@@ -162,6 +170,100 @@ NSString * portNum = @"3000";
 		[session setCategory:AVAudioSessionCategoryPlayback error:nil];
 	}
 	[self.generator play];
+}
+
+-(void) takePhoto {
+    AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    NSError *error = nil;
+    AVCaptureInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice
+                                                                       error:&error];
+    
+    if (videoInput) {
+        
+        // セッション初期化
+        self.captureSession = [[AVCaptureSession alloc] init];
+        [self.captureSession addInput:videoInput];
+        [self.captureSession beginConfiguration];
+        self.captureSession.sessionPreset = AVCaptureSessionPresetPhoto;
+        [self.captureSession commitConfiguration];
+        
+        
+        // ビデオの解像度 Midium
+        if ([captureSession canSetSessionPreset:AVCaptureSessionPresetMedium]) {
+            self.captureSession.sessionPreset = AVCaptureSessionPresetMedium;
+        }
+        
+        // AVCaptureStillImageOutputで静止画出力を作る
+        self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+        NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                        AVVideoCodecJPEG, AVVideoCodecKey, nil];
+        self.stillImageOutput.outputSettings = outputSettings;
+        [outputSettings release];
+        
+        // セッションに出力を追加
+        [self.captureSession addOutput:self.stillImageOutput];
+        
+//        // プレビュー表示
+//        AVCaptureVideoPreviewLayer *previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:captureSession];
+//        previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+//        [previewLayer setFrame:CGRectMake(200, 600, 40, 30)];
+//        
+//        [self.view.layer addSublayer:previewLayer];
+        
+        // セッション開始
+        [self.captureSession startRunning];
+        
+        // コネクションを検索
+        AVCaptureConnection *videoConnection = nil;
+        for (AVCaptureConnection *connection in self.stillImageOutput.connections) {
+            for (AVCaptureInputPort *port in [connection inputPorts]) {
+                if ([[port mediaType] isEqual:AVMediaTypeVideo] ) {
+                    videoConnection = connection;
+                    break;
+                }
+            }
+            if (videoConnection)
+                break;
+        }
+        
+        // 静止画をキャプチャする
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{// Delay execution of my block for 3 seconds.
+
+            [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection
+                                                               completionHandler:
+             ^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
+                 if (imageSampleBuffer != NULL) {
+                     // キャプチャしたデータを取る
+                     NSData *data = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
+                     
+                     ///////////////////// using data here
+                     
+                     UIImage *image = [UIImage imageWithData:data];
+                     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+                     [library writeImageToSavedPhotosAlbum:image.CGImage
+                                               orientation:image.imageOrientation
+                                           completionBlock:^(NSURL *assetURL, NSError *error) {
+                                           }];
+                     
+                     
+                     /////////////////////
+                     
+                 }
+             }];
+            
+            
+            [self.captureSession stopRunning];
+            
+        });
+    } else {
+        NSLog(@"ERROR:%@", error);
+    }
+    
+}
+
+
+- (IBAction) capture:(id)sender {
+    [self takePhoto];
 }
 
 @end

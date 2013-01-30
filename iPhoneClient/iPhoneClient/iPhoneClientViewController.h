@@ -14,6 +14,8 @@
 #import "FSKSerialGenerator.h"
 #include <ctype.h>
 
+#import <AVFoundation/AVFoundation.h>
+
 @class AudioSignalAnalyzer, FSKSerialGenerator, FSKRecognizer;
 @interface iPhoneClientViewController : UIViewController <UITextFieldDelegate, CharReceiver>
 
@@ -28,9 +30,13 @@
 @property (nonatomic, retain) FSKSerialGenerator* generator;
 @property (nonatomic, retain) FSKRecognizer* recognizer;
 
+@property (strong) AVCaptureStillImageOutput *stillImageOutput;
+@property (strong) AVCaptureSession *captureSession;
+
 -(void)initConnector;
 - (IBAction)slideFirstSlider:(id)sender;
 - (IBAction)slideSecondSlider:(id)sender;
+- (IBAction)capture:(id)sender;
 - (void) receiveSetUrlNotification:(NSNotification *)notification;
 
 @end

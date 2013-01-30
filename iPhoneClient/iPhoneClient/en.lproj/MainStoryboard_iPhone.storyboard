@@ -86,6 +86,19 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFe-gY-bAj">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Capture">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="capture:" destination="2" eventType="touchUpInside" id="VVU-ty-Eml"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -93,21 +106,23 @@
                             <constraint firstAttribute="trailing" secondItem="dsJ-yB-7Xi" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="4rS-aY-X4h"/>
                             <constraint firstItem="3tG-ZQ-vkH" firstAttribute="top" secondItem="3" secondAttribute="top" constant="38" id="6r0-Wt-1Z0"/>
                             <constraint firstItem="lyU-8y-NRm" firstAttribute="leading" secondItem="KnH-70-Ews" secondAttribute="leading" type="default" id="AU1-9a-INQ"/>
+                            <constraint firstItem="lyU-8y-NRm" firstAttribute="top" secondItem="3" secondAttribute="top" constant="234" id="Cat-78-rmr"/>
                             <constraint firstItem="JJn-I7-lC8" firstAttribute="bottom" secondItem="KnH-70-Ews" secondAttribute="bottom" type="default" id="Dyg-UJ-GQk"/>
                             <constraint firstItem="zfQ-Hm-YlI" firstAttribute="leading" secondItem="dsJ-yB-7Xi" secondAttribute="leading" type="default" id="E4e-1M-N5L"/>
                             <constraint firstItem="lrh-L4-MIP" firstAttribute="trailing" secondItem="lyU-8y-NRm" secondAttribute="trailing" type="default" id="F1E-eL-WXZ"/>
                             <constraint firstItem="Wxs-iT-3WF" firstAttribute="top" secondItem="3" secondAttribute="top" constant="34" id="H15-dh-LYE"/>
+                            <constraint firstItem="lyU-8y-NRm" firstAttribute="bottom" secondItem="SOs-EM-rdQ" secondAttribute="bottom" type="default" id="HhJ-UY-HQ2"/>
                             <constraint firstItem="Wxs-iT-3WF" firstAttribute="leading" secondItem="3tG-ZQ-vkH" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="JWu-hY-1se"/>
                             <constraint firstItem="SOs-EM-rdQ" firstAttribute="baseline" secondItem="zfQ-Hm-YlI" secondAttribute="baseline" type="default" id="Jbk-8M-iVb"/>
                             <constraint firstItem="3tG-ZQ-vkH" firstAttribute="leading" secondItem="Nby-84-xXO" secondAttribute="leading" type="default" id="Jnh-2c-Eai"/>
                             <constraint firstItem="SOs-EM-rdQ" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="76" id="SV0-mC-Gtz"/>
                             <constraint firstItem="Nby-84-xXO" firstAttribute="leading" secondItem="zfQ-Hm-YlI" secondAttribute="leading" type="default" id="TGu-SR-dX3"/>
-                            <constraint firstItem="SOs-EM-rdQ" firstAttribute="top" secondItem="lyU-8y-NRm" secondAttribute="top" type="default" id="iSh-Bg-GN1"/>
                             <constraint firstAttribute="bottom" secondItem="lrh-L4-MIP" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="l4S-zb-B1H"/>
+                            <constraint firstAttribute="bottom" secondItem="HFe-gY-bAj" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="led-0g-zuk"/>
                             <constraint firstItem="Wxs-iT-3WF" firstAttribute="trailing" secondItem="KnH-70-Ews" secondAttribute="trailing" type="default" id="m2v-qR-L4E"/>
                             <constraint firstItem="lyU-8y-NRm" firstAttribute="trailing" secondItem="KnH-70-Ews" secondAttribute="trailing" type="default" id="ruN-ab-Qth"/>
+                            <constraint firstItem="HFe-gY-bAj" firstAttribute="leading" secondItem="dsJ-yB-7Xi" secondAttribute="leading" type="default" id="uiK-cq-BUC"/>
                             <constraint firstAttribute="bottom" secondItem="dsJ-yB-7Xi" secondAttribute="bottom" constant="79" id="v8y-5e-rUw"/>
-                            <constraint firstItem="zfQ-Hm-YlI" firstAttribute="top" secondItem="3" secondAttribute="top" constant="235" id="vMG-Nd-fre"/>
                             <constraint firstItem="JJn-I7-lC8" firstAttribute="baseline" secondItem="Nby-84-xXO" secondAttribute="baseline" type="default" id="yoJ-eg-FzH"/>
                             <constraint firstItem="KnH-70-Ews" firstAttribute="top" secondItem="3" secondAttribute="top" constant="188" id="zMY-Yy-XZm"/>
                         </constraints>
@@ -208,6 +223,7 @@
         <class className="iPhoneClientViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/iPhoneClientViewController.h"/>
             <relationships>
+                <relationship kind="action" name="capture:"/>
                 <relationship kind="action" name="slideFirstSlider:"/>
                 <relationship kind="action" name="slideSecondSlider:"/>
                 <relationship kind="outlet" name="consoleTextField" candidateClass="UITextView"/>

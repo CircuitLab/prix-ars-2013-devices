@@ -56,6 +56,7 @@
 		B256247B16B8B6A500B0A6AF /* UnibaSocketIOConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = B256247A16B8B6A500B0A6AF /* UnibaSocketIOConnector.m */; };
 		B256247D16B8B6FA00B0A6AF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B256247C16B8B6FA00B0A6AF /* CFNetwork.framework */; };
 		B256248016B8B7E400B0A6AF /* UnibaMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B256247F16B8B7E400B0A6AF /* UnibaMenuViewController.m */; };
+		B256248216B9120700B0A6AF /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B256248116B9120700B0A6AF /* AssetsLibrary.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -157,6 +158,7 @@
 		B256247C16B8B6FA00B0A6AF /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		B256247E16B8B7E400B0A6AF /* UnibaMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnibaMenuViewController.h; sourceTree = "<group>"; };
 		B256247F16B8B7E400B0A6AF /* UnibaMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnibaMenuViewController.m; sourceTree = "<group>"; };
+		B256248116B9120700B0A6AF /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B256248216B9120700B0A6AF /* AssetsLibrary.framework in Frameworks */,
 				B256247D16B8B6FA00B0A6AF /* CFNetwork.framework in Frameworks */,
 				B20DBE0016B7A3AB00E04EE9 /* AudioToolbox.framework in Frameworks */,
 				B20DBDFE16B7A39A00E04EE9 /* AVFoundation.framework in Frameworks */,
@@ -179,9 +182,6 @@
 		B20DBDAD16B7A2B200E04EE9 = {
 			isa = PBXGroup;
 			children = (
-				B256247C16B8B6FA00B0A6AF /* CFNetwork.framework */,
-				B20DBDFF16B7A3AB00E04EE9 /* AudioToolbox.framework */,
-				B20DBDFD16B7A39A00E04EE9 /* AVFoundation.framework */,
 				B20DBDBF16B7A2B200E04EE9 /* iPhoneClient */,
 				B20DBDB816B7A2B200E04EE9 /* Frameworks */,
 				B20DBDB716B7A2B200E04EE9 /* Products */,
@@ -199,6 +199,10 @@
 		B20DBDB816B7A2B200E04EE9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B256248116B9120700B0A6AF /* AssetsLibrary.framework */,
+				B256247C16B8B6FA00B0A6AF /* CFNetwork.framework */,
+				B20DBDFF16B7A3AB00E04EE9 /* AudioToolbox.framework */,
+				B20DBDFD16B7A39A00E04EE9 /* AVFoundation.framework */,
 				B20DBDB916B7A2B200E04EE9 /* UIKit.framework */,
 				B20DBDBB16B7A2B200E04EE9 /* Foundation.framework */,
 				B20DBDBD16B7A2B200E04EE9 /* CoreGraphics.framework */,
