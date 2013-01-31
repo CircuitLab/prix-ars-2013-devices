@@ -33,6 +33,8 @@
 @property (strong) AVCaptureStillImageOutput *stillImageOutput;
 @property (strong) AVCaptureSession *captureSession;
 
+@property (strong) NSURL *lastImageAssetUrl;
+
 -(void)initConnector;
 - (IBAction)slideFirstSlider:(id)sender;
 - (IBAction)slideSecondSlider:(id)sender;

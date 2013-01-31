@@ -31,10 +31,12 @@
 @synthesize stillImageOutput;
 @synthesize captureSession;
 
+@synthesize lastImageAssetUrl;
+
 NSString * hostname = @"http://moxus.local";
 NSString * portNum = @"3000";
 
-
+#pragma mark - View Contrller Life Cycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -66,8 +68,7 @@ NSString * portNum = @"3000";
 	analyzer = [[AudioSignalAnalyzer alloc] init];
 	[analyzer addRecognizer:recognizer];
     self.serialTextField.delegate = self;
-    
-    [self takePhoto];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -136,7 +137,7 @@ NSString * portNum = @"3000";
 };
 
 
-#pragma Softmodem 通信
+#pragma mark Softmodem 通信
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	[self.generator writeByte:0xff];
 	[self.generator writeBytes:[textField.text UTF8String] length:[textField.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
@@ -153,7 +154,7 @@ NSString * portNum = @"3000";
 }
 
 
-#pragma Camera
+#pragma mark Camera
 - (void)inputIsAvailableChanged:(BOOL)isInputAvailable
 {
 	NSLog(@"inputIsAvailableChanged %d",isInputAvailable);
@@ -175,8 +176,7 @@ NSString * portNum = @"3000";
 -(void) takePhoto {
     AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     NSError *error = nil;
-    AVCaptureInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice
-                                                                       error:&error];
+    AVCaptureInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
     
     if (videoInput) {
         
@@ -227,7 +227,7 @@ NSString * portNum = @"3000";
         }
         
         // 静止画をキャプチャする
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{// Delay execution of my block for 3 seconds.
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{// Delay execution of my block for 2 seconds.
 
             [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection
                                                                completionHandler:
@@ -243,14 +243,17 @@ NSString * portNum = @"3000";
                      [library writeImageToSavedPhotosAlbum:image.CGImage
                                                orientation:image.imageOrientation
                                            completionBlock:^(NSURL *assetURL, NSError *error) {
+                                               self.lastImageAssetUrl = assetURL;
+                                               
+                                               dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+                                                   [self getImageData];
+                                               });
                                            }];
-                     
-                     
+                    
                      /////////////////////
                      
                  }
              }];
-            
             
             [self.captureSession stopRunning];
             
@@ -258,12 +261,119 @@ NSString * portNum = @"3000";
     } else {
         NSLog(@"ERROR:%@", error);
     }
-    
 }
 
 
 - (IBAction) capture:(id)sender {
     [self takePhoto];
 }
+
+#pragma mark Image Upload Connection
+-(void) postImageRequestWithData:(NSDictionary *)params url:(NSString*)url_  {
+    NSURL *url = [NSURL URLWithString:url_];
+    
+    // BODY の作成
+    NSString *bodyString = [self _buildParameters:params];
+    NSData   *httpBody   = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:url
+                                                            cachePolicy:NSURLRequestReloadIgnoringCacheData
+                                                        timeoutInterval:15.0];
+    // POST の HTTP Request を作成
+    [req setHTTPMethod:@"POST"];
+    [req setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
+    [req setValue:[NSString stringWithFormat:@"%d", [httpBody length]] forHTTPHeaderField:@"Content-Length"];
+    [req setHTTPBody:httpBody];
+    [req setHTTPShouldHandleCookies:YES];
+    
+    NSURLConnection *conn;
+    conn = [NSURLConnection connectionWithRequest:req delegate:self];
+    
+    if (conn) {
+        NSLog(@"NSURLConnection create success");
+    } else {
+        NSLog(@"error : conn is nil");
+    }
+}
+- (NSString*)_buildParameters:(NSDictionary *)params {
+    NSMutableString *s = [NSMutableString string];
+    
+    NSString *key;
+    for ( key in params ) {
+        NSString *uriEncodedValue = [self _uriEncodeForString:[params objectForKey:key]];
+        [s appendFormat:@"%@=%@&", key, uriEncodedValue];
+    }
+    
+    if ( [s length] > 0 ) {
+        [s deleteCharactersInRange:NSMakeRange([s length]-1, 1)];
+    }
+    return s;
+}
+
+- (NSString*)_uriEncodeForString:(NSString *)str {
+    return [((NSString*)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                (CFStringRef)str,
+                                                                NULL,
+                                                                (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                kCFStringEncodingUTF8)) autorelease];
+}
+
+//-(NSDictionary*) getCurrentCoordinates {
+//    NSDictionary *dict;
+//    return dict;
+//}
+
+-(void) getImageData {
+    ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
+    [library assetForURL:self.lastImageAssetUrl resultBlock:^(ALAsset *asset) {
+        ALAssetRepresentation *repr = [asset defaultRepresentation];
+        NSUInteger size = repr.size;
+        NSMutableData *data = [NSMutableData dataWithLength:size];
+        NSError *error;
+        [repr getBytes:data.mutableBytes fromOffset:0 length:size error:&error];
+       
+        [self buildRequestWithImageData:data];
+        
+    } failureBlock:^(NSError *error) {
+        NSLog(@"Fail to get image data from assets.....");
+    }];
+}
+
+-(void) buildRequestWithImageData:(NSData*)data_ {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    [UIDevice currentDevice].batteryMonitoringEnabled = YES;
+    float battery = [UIDevice currentDevice].batteryLevel;
+    NSNumber *parcentOfBattery;
+    parcentOfBattery = [NSNumber numberWithInt:( battery * 100 )];
+    
+//    [dict setValue:data_ forKey:@"photo"];
+//    [dict setValue:[NSDate date] forKey:@"tomestamp"];
+//    [dict setValue:[NSNumber numberWithFloat:[self.panValueLabel.text floatValue]] forKey:@"x"];
+//    [dict setValue:[NSNumber numberWithFloat:[self.pitchValueLabel.text floatValue]]  forKey:@"y"];
+//    [dict setValue:parcentOfBattery forKey:@"battery"];
+    
+    //buid with string at all.
+    [dict setValue:[NSString stringWithFormat:@"%@",data_] forKey:@"photo"];
+    [dict setValue:[NSString stringWithFormat:@"%@",[NSDate date]] forKey:@"timestamp"];
+    [dict setValue:self.panValueLabel.text forKey:@"x"];
+    [dict setValue:self.pitchValueLabel.text forKey:@"y"];
+    [dict setValue:[NSString stringWithFormat:@"%@",parcentOfBattery] forKey:@"battery"];
+    
+    [self postImageRequestWithData:dict url:[NSString stringWithFormat:@"%@/photos", hostname]];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"didReceiveResponse");
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    NSLog(@"didReceiveData");
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    NSLog(@"connectionDidFinishLoading");
+}
+
 
 @end
