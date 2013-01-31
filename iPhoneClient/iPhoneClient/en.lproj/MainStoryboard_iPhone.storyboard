@@ -9,7 +9,7 @@
             <objects>
                 <viewController id="2" customClass="iPhoneClientViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrh-L4-MIP">
@@ -43,7 +43,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dsJ-yB-7Xi">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="189" id="7AE-mS-u8A"/>
+                                    <constraint firstAttribute="height" constant="171" id="Gyl-qP-bAy"/>
                                     <constraint firstAttribute="width" constant="276" id="kks-YG-1jX"/>
                                 </constraints>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -105,8 +105,8 @@
                             <constraint firstItem="JJn-I7-lC8" firstAttribute="leading" secondItem="Nby-84-xXO" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="4NB-EL-QAd"/>
                             <constraint firstAttribute="trailing" secondItem="dsJ-yB-7Xi" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="4rS-aY-X4h"/>
                             <constraint firstItem="3tG-ZQ-vkH" firstAttribute="top" secondItem="3" secondAttribute="top" constant="38" id="6r0-Wt-1Z0"/>
+                            <constraint firstItem="lyU-8y-NRm" firstAttribute="top" secondItem="3" secondAttribute="top" constant="155" id="9cA-v6-0va"/>
                             <constraint firstItem="lyU-8y-NRm" firstAttribute="leading" secondItem="KnH-70-Ews" secondAttribute="leading" type="default" id="AU1-9a-INQ"/>
-                            <constraint firstItem="lyU-8y-NRm" firstAttribute="top" secondItem="3" secondAttribute="top" constant="234" id="Cat-78-rmr"/>
                             <constraint firstItem="JJn-I7-lC8" firstAttribute="bottom" secondItem="KnH-70-Ews" secondAttribute="bottom" type="default" id="Dyg-UJ-GQk"/>
                             <constraint firstItem="zfQ-Hm-YlI" firstAttribute="leading" secondItem="dsJ-yB-7Xi" secondAttribute="leading" type="default" id="E4e-1M-N5L"/>
                             <constraint firstItem="lrh-L4-MIP" firstAttribute="trailing" secondItem="lyU-8y-NRm" secondAttribute="trailing" type="default" id="F1E-eL-WXZ"/>
@@ -115,18 +115,19 @@
                             <constraint firstItem="Wxs-iT-3WF" firstAttribute="leading" secondItem="3tG-ZQ-vkH" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="JWu-hY-1se"/>
                             <constraint firstItem="SOs-EM-rdQ" firstAttribute="baseline" secondItem="zfQ-Hm-YlI" secondAttribute="baseline" type="default" id="Jbk-8M-iVb"/>
                             <constraint firstItem="3tG-ZQ-vkH" firstAttribute="leading" secondItem="Nby-84-xXO" secondAttribute="leading" type="default" id="Jnh-2c-Eai"/>
+                            <constraint firstItem="dsJ-yB-7Xi" firstAttribute="top" secondItem="3" secondAttribute="top" constant="203" id="Qyo-vu-xwB"/>
                             <constraint firstItem="SOs-EM-rdQ" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="76" id="SV0-mC-Gtz"/>
                             <constraint firstItem="Nby-84-xXO" firstAttribute="leading" secondItem="zfQ-Hm-YlI" secondAttribute="leading" type="default" id="TGu-SR-dX3"/>
                             <constraint firstAttribute="bottom" secondItem="lrh-L4-MIP" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="l4S-zb-B1H"/>
                             <constraint firstAttribute="bottom" secondItem="HFe-gY-bAj" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="led-0g-zuk"/>
                             <constraint firstItem="Wxs-iT-3WF" firstAttribute="trailing" secondItem="KnH-70-Ews" secondAttribute="trailing" type="default" id="m2v-qR-L4E"/>
                             <constraint firstItem="lyU-8y-NRm" firstAttribute="trailing" secondItem="KnH-70-Ews" secondAttribute="trailing" type="default" id="ruN-ab-Qth"/>
+                            <constraint firstItem="KnH-70-Ews" firstAttribute="top" secondItem="3" secondAttribute="top" constant="109" id="sUD-c3-ReL"/>
                             <constraint firstItem="HFe-gY-bAj" firstAttribute="leading" secondItem="dsJ-yB-7Xi" secondAttribute="leading" type="default" id="uiK-cq-BUC"/>
-                            <constraint firstAttribute="bottom" secondItem="dsJ-yB-7Xi" secondAttribute="bottom" constant="79" id="v8y-5e-rUw"/>
                             <constraint firstItem="JJn-I7-lC8" firstAttribute="baseline" secondItem="Nby-84-xXO" secondAttribute="baseline" type="default" id="yoJ-eg-FzH"/>
-                            <constraint firstItem="KnH-70-Ews" firstAttribute="top" secondItem="3" secondAttribute="top" constant="188" id="zMY-Yy-XZm"/>
                         </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="consoleTextField" destination="dsJ-yB-7Xi" id="SwW-kK-Wbr"/>
                         <outlet property="panValueLabel" destination="JJn-I7-lC8" id="8h7-hg-OJ9"/>
@@ -143,7 +144,7 @@
             <objects>
                 <viewController id="AXV-1y-TNf" customClass="UnibaMenuViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gPH-Cw-IOO">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ubr-e3-qNr">
@@ -198,6 +199,7 @@
                             <constraint firstItem="yDm-Rd-ua3" firstAttribute="baseline" secondItem="bLa-jJ-SmE" secondAttribute="baseline" type="default" id="xht-u8-vbJ"/>
                         </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="hostInputText" destination="bLa-jJ-SmE" id="tuB-bp-5lc"/>
                         <outlet property="portInputText" destination="i65-Yv-iuu" id="bwL-ji-Iul"/>
