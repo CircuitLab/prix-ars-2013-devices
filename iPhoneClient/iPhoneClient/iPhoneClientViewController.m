@@ -42,6 +42,16 @@ NSString * portNum = @"3000";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (nil == locationManager) {
+        locationManager = [[CLLocationManager alloc] init];
+    }
+    locationManager.delegate = self; // デリゲート設定
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest; // 位置測定の望みの精度を設定
+    locationManager.distanceFilter = kCLDistanceFilterNone; // 位置情報更新の目安距離
+    
+    [self updateCurrentCoordinate];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveJsonNotification:) name:@"recivedGetMessage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNodeConnectionNotification:) name:@"recivedConnectionData" object:nil];
     
@@ -73,14 +83,6 @@ NSString * portNum = @"3000";
 	[analyzer addRecognizer:recognizer];
     self.serialTextField.delegate = self;
     
-    if (nil == locationManager) {
-        locationManager = [[CLLocationManager alloc] init];
-    }
-    locationManager.delegate = self; // デリゲート設定
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest; // 位置測定の望みの精度を設定
-    locationManager.distanceFilter = kCLDistanceFilterNone; // 位置情報更新の目安距離
-    
-    [self updateCurrentCoordinate];
 }
 
 - (void)didReceiveMemoryWarning
