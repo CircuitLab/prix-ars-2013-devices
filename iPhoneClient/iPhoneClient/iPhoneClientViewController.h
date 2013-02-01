@@ -16,8 +16,10 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+#import <CoreLocation/CoreLocation.h>
+
 @class AudioSignalAnalyzer, FSKSerialGenerator, FSKRecognizer;
-@interface iPhoneClientViewController : UIViewController <UITextFieldDelegate, CharReceiver>
+@interface iPhoneClientViewController : UIViewController <UITextFieldDelegate, CharReceiver, CLLocationManagerDelegate>
 
 
 @property (retain) UnibaSocketIOConnector * connector;
@@ -34,6 +36,10 @@
 @property (strong) AVCaptureSession *captureSession;
 
 @property (strong) NSURL *lastImageAssetUrl;
+
+@property (strong) CLLocationManager *locationManager;
+
+@property double longtitude, latitude;
 
 -(void)initConnector;
 - (IBAction)slideFirstSlider:(id)sender;

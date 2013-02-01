@@ -33,6 +33,8 @@
 
 @synthesize lastImageAssetUrl;
 
+@synthesize locationManager;
+
 NSString * hostname = @"http://moxus.local";
 NSString * portNum = @"3000";
 
@@ -48,6 +50,8 @@ NSString * portNum = @"3000";
     [self.connector connectToUnicastServer];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSetUrlNotification:) name:@"recivedSetUrlMessage" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveJsonNotification:) name:@"recivedViewPointMessage" object:nil];
     
     
     AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -68,7 +72,15 @@ NSString * portNum = @"3000";
 	analyzer = [[AudioSignalAnalyzer alloc] init];
 	[analyzer addRecognizer:recognizer];
     self.serialTextField.delegate = self;
-
+    
+    if (nil == locationManager) {
+        locationManager = [[CLLocationManager alloc] init];
+    }
+    locationManager.delegate = self; // デリゲート設定
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest; // 位置測定の望みの精度を設定
+    locationManager.distanceFilter = kCLDistanceFilterNone; // 位置情報更新の目安距離
+    
+    [self updateCurrentCoordinate];
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,6 +94,7 @@ NSString * portNum = @"3000";
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"recivedGetMessage"];
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"recivedConnectionData"];
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"recivedSetUrlMessage"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"recivedViewPointMessage"];
 }
 
 
@@ -107,7 +120,14 @@ NSString * portNum = @"3000";
 #pragma mark - Node Connection Notification メソッド
 - (void) receiveNodeConnectionNotification:(NSNotification *)notification{
     if ([[notification name] isEqualToString:@"recivedConnectionData"]){
+        [self updateCurrentCoordinate];
         self.consoleTextField.text = @"connected";
+        NSMutableDictionary *helloDict = [NSMutableDictionary dictionary];
+        
+        [helloDict setValue:[[[UIDevice currentDevice] identifierForVendor] UUIDString] forKey:@"udid"];
+        [helloDict setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"latitude"];
+        [helloDict setValue:[NSNumber numberWithDouble:self.longtitude] forKey:@"longtitude"];
+        [connector sendEventToUnicastServer:helloDict forEvent:@"hello"];
     }
 }
 
@@ -120,6 +140,18 @@ NSString * portNum = @"3000";
 
             }
             self.consoleTextField.text = [self.consoleTextField.text stringByAppendingFormat:@"%@", @"EVNT:get"];
+        }
+    } else if([[notification name] isEqualToString:@"recivedViewPointMessage"]){
+        NSDictionary *position = [NSDictionary dictionaryWithDictionary:[notification userInfo]];
+        if( position > 0 ){
+            
+            if( nil != [position objectForKey:@"x"] ) {
+                self.pitchValueLabel.text = [position objectForKey:@"x"];
+            }
+            if( nil != [position objectForKey:@"y"] ) {
+                self.pitchValueLabel.text = [position objectForKey:@"y"];
+            }
+//            sendGenerator "XX
         }
     }
 }
@@ -146,6 +178,10 @@ NSString * portNum = @"3000";
 	return YES;
 }
 
+- (void)sendGenerator:( NSString* )string_ {
+    [self.generator writeBytes:[string_ UTF8String] length:[string_ lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
+}
+
 - (void) receivedChar:(char)input
 {
 	if(isprint(input)){
@@ -153,6 +189,21 @@ NSString * portNum = @"3000";
 	}
 }
 
+#pragma mark Get Coordinate
+- (void)updateCurrentCoordinate {
+    [locationManager startUpdatingLocation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    self.longtitude = newLocation.coordinate.longitude;
+    self.latitude = newLocation.coordinate.latitude;
+    [locationManager stopUpdatingLocation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    [locationManager stopUpdatingLocation];
+    NSLog(@"Fail to update location data...");
+}
 
 #pragma mark Camera
 - (void)inputIsAvailableChanged:(BOOL)isInputAvailable
@@ -360,7 +411,7 @@ NSString * portNum = @"3000";
     [dict setValue:self.pitchValueLabel.text forKey:@"y"];
     [dict setValue:[NSString stringWithFormat:@"%@",parcentOfBattery] forKey:@"battery"];
     
-    [self postImageRequestWithData:dict url:[NSString stringWithFormat:@"%@/photos", hostname]];
+    [self postImageRequestWithData:dict url:[NSString stringWithFormat:@"%@:%@/photos", hostname, portNum]];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {

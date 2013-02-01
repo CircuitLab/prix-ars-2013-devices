@@ -96,6 +96,15 @@
             NSLog(@"connection result ____disconnect");
         }];
         
+        [_socketIONodeServerUnicast on:@"viewpoint" listener:^(NNArgs* args) {
+            NSDictionary* points = [args get:0];
+            NSLog(@"this is response og get:%@",points);
+            dispatch_async( dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"recivedViewPointMessage" object:self userInfo:points];
+                NSLog(@"recivedViewPointMessage");
+            });
+        }];
+        
     }else{
         _isConnectsocketIONodeServerUnicast = NO;
         [NSException raise:@"Fatal" format:@"_socketIONodeServerUnicast or _nodeServerUnicastUrl in nil"];
