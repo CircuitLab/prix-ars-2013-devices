@@ -20,7 +20,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 @protocol IphoneClientRequest <PHVJSONURL>
-@property NSData *photo;
+@property Base64 *photo;
 @property NSString *timestamp;
 @property NSString *x;
 @property NSString *y;

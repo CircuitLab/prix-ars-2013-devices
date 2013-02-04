@@ -12,6 +12,7 @@
 #import "FSKRecognizer.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "NSMutableString+NewstepNSStringAdditions.h"
+#import "PHVBaseDataSupport.h"
 
 @interface iPhoneClientViewController ()
 
@@ -358,7 +359,7 @@ NSString * portNum = @"3000";
         
     NSMutableDictionary <IphoneClientRequest> *requestDict = [NSMutableDictionary new];
     
-    requestDict.photo = data_;
+    requestDict.photo = [data_ base64];
     requestDict.timestamp = [[NSDate date]description]; //フォーマットした方がいい
     requestDict.x = self.panValueLabel.text;
     requestDict.y = self.pitchValueLabel.text;
