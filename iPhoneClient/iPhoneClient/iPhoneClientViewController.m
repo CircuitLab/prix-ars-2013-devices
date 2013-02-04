@@ -157,6 +157,8 @@ NSString * portNum = @"3000";
             }
 //            sendGenerator "XX
         }
+    } else if([[notification name] isEqualToString:@"recivedTakeMessage"]){
+            [self takePhoto];
     }
 }
 

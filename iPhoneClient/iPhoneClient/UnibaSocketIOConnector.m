@@ -105,6 +105,13 @@
             });
         }];
         
+        [_socketIONodeServerUnicast on:@"take" listener:^(NNArgs* args) {
+            NSLog(@"take phote emmit recieved");
+            dispatch_async( dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"recivedTakeMessage" object:self userInfo:nil];
+            });
+        }];
+        
     }else{
         _isConnectsocketIONodeServerUnicast = NO;
         [NSException raise:@"Fatal" format:@"_socketIONodeServerUnicast or _nodeServerUnicastUrl in nil"];
@@ -132,7 +139,7 @@
 };
 
 
-#pragma mark - Dいsconnect Method
+#pragma mark - Disconnect Method
 - (void)disconnect{
     if(_socketIONodeServerUnicast){
         [self shutdwonUnicastServer];
