@@ -162,6 +162,8 @@ NSString * portNum = @"3000";
     NSDictionary *newUrl = [NSDictionary dictionaryWithDictionary:[notification userInfo]];
     NSString* hostString = [NSString stringWithFormat:@"http://%@",[newUrl valueForKey:@"host"]];
     NSString* portString = [newUrl valueForKey:@"port"];
+    hostname = [newUrl valueForKey:@"host"];
+    portNum = portString;
     if( hostString != nil && portString != nil ){
         [self.connector setUrl:hostString onPort:portString onRoom:[newUrl valueForKey:@"room"]];
 
@@ -368,7 +370,7 @@ NSString * portNum = @"3000";
                                                                 (CFStringRef)str,
                                                                 NULL,
                                                                 (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                kCFStringEncodingUTF8)) autorelease];
+                                                                kCFStringEncodingUTF8)));
 }
 
 //-(NSDictionary*) getCurrentCoordinates {
