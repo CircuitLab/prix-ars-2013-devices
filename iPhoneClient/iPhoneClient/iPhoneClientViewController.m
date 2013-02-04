@@ -245,9 +245,9 @@ NSString * portNum = @"3000";
         [self.captureSession commitConfiguration];
         
         
-        // ビデオの解像度 Midium
-        if ([captureSession canSetSessionPreset:AVCaptureSessionPresetMedium]) {
-            self.captureSession.sessionPreset = AVCaptureSessionPresetMedium;
+        // ビデオの解像度 High
+        if ([captureSession canSetSessionPreset:AVCaptureSessionPresetHigh]) {
+            self.captureSession.sessionPreset = AVCaptureSessionPresetHigh;
         }
         
         // AVCaptureStillImageOutputで静止画出力を作る
