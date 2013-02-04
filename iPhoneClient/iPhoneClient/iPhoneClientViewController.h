@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PHVDynamicDataSupport.h"
 #import <AVFoundation/AVAudioSession.h>
 #import "CharReceiver.h"
 #import "UnibaSocketIOConnector.h"
@@ -17,6 +18,15 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import <CoreLocation/CoreLocation.h>
+
+@protocol IphoneClientRequest <PHVJSONURL>
+@property NSData *photo;
+@property NSString *timestamp;
+@property NSString *x;
+@property NSString *y;
+@property NSString *battery;
+
+@end
 
 @class AudioSignalAnalyzer, FSKSerialGenerator, FSKRecognizer;
 @interface iPhoneClientViewController : UIViewController <UITextFieldDelegate, CharReceiver, CLLocationManagerDelegate>

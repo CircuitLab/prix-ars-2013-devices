@@ -19,44 +19,54 @@
 		B20DBDD316B7A2B200E04EE9 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B20DBDD116B7A2B200E04EE9 /* MainStoryboard_iPhone.storyboard */; };
 		B20DBDD616B7A2B200E04EE9 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B20DBDD416B7A2B200E04EE9 /* MainStoryboard_iPad.storyboard */; };
 		B20DBDD916B7A2B200E04EE9 /* iPhoneClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B20DBDD816B7A2B200E04EE9 /* iPhoneClientViewController.m */; };
-		B20DBDF516B7A30F00E04EE9 /* AudioQueueObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B20DBDE116B7A30F00E04EE9 /* AudioQueueObject.m */; };
-		B20DBDF616B7A30F00E04EE9 /* AudioSignalAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = B20DBDE316B7A30F00E04EE9 /* AudioSignalAnalyzer.m */; };
-		B20DBDF716B7A30F00E04EE9 /* AudioSignalGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = B20DBDE516B7A30F00E04EE9 /* AudioSignalGenerator.m */; };
-		B20DBDF916B7A30F00E04EE9 /* FSKRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = B20DBDEC16B7A30F00E04EE9 /* FSKRecognizer.mm */; };
-		B20DBDFA16B7A30F00E04EE9 /* FSKSerialGenerator.mm in Sources */ = {isa = PBXBuildFile; fileRef = B20DBDEE16B7A30F00E04EE9 /* FSKSerialGenerator.mm */; };
-		B20DBDFC16B7A30F00E04EE9 /* MultiDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B20DBDF316B7A30F00E04EE9 /* MultiDelegate.m */; };
+		B20DBDF516B7A30F00E04EE9 /* AudioQueueObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B20DBDE116B7A30F00E04EE9 /* AudioQueueObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B20DBDF616B7A30F00E04EE9 /* AudioSignalAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = B20DBDE316B7A30F00E04EE9 /* AudioSignalAnalyzer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B20DBDF716B7A30F00E04EE9 /* AudioSignalGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = B20DBDE516B7A30F00E04EE9 /* AudioSignalGenerator.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B20DBDF916B7A30F00E04EE9 /* FSKRecognizer.mm in Sources */ = {isa = PBXBuildFile; fileRef = B20DBDEC16B7A30F00E04EE9 /* FSKRecognizer.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B20DBDFA16B7A30F00E04EE9 /* FSKSerialGenerator.mm in Sources */ = {isa = PBXBuildFile; fileRef = B20DBDEE16B7A30F00E04EE9 /* FSKSerialGenerator.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B20DBDFC16B7A30F00E04EE9 /* MultiDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B20DBDF316B7A30F00E04EE9 /* MultiDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B20DBDFE16B7A39A00E04EE9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DBDFD16B7A39A00E04EE9 /* AVFoundation.framework */; };
 		B20DBE0016B7A3AB00E04EE9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20DBDFF16B7A3AB00E04EE9 /* AudioToolbox.framework */; };
 		B256242E16B8B61600B0A6AF /* .gitattributes in Resources */ = {isa = PBXBuildFile; fileRef = B256241D16B8B61600B0A6AF /* .gitattributes */; };
 		B256242F16B8B61600B0A6AF /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B256241E16B8B61600B0A6AF /* .gitignore */; };
-		B256243016B8B61600B0A6AF /* NNSocketIO.m in Sources */ = {isa = PBXBuildFile; fileRef = B256242116B8B61600B0A6AF /* NNSocketIO.m */; };
-		B256243116B8B61600B0A6AF /* NNSocketIONamespace.m in Sources */ = {isa = PBXBuildFile; fileRef = B256242516B8B61600B0A6AF /* NNSocketIONamespace.m */; };
-		B256243216B8B61600B0A6AF /* NNSocketIOOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = B256242716B8B61600B0A6AF /* NNSocketIOOptions.m */; };
-		B256243316B8B61600B0A6AF /* NNSocketIOPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256242916B8B61600B0A6AF /* NNSocketIOPacket.m */; };
-		B256243416B8B61600B0A6AF /* NNSocketIOParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B256242B16B8B61600B0A6AF /* NNSocketIOParser.m */; };
-		B256243516B8B61600B0A6AF /* NNSocketIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256242D16B8B61600B0A6AF /* NNSocketIOSocket.m */; };
-		B256246716B8B61E00B0A6AF /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256243A16B8B61E00B0A6AF /* GCDAsyncSocket.m */; };
-		B256246816B8B61E00B0A6AF /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256243C16B8B61E00B0A6AF /* GCDAsyncUdpSocket.m */; };
-		B256246916B8B61E00B0A6AF /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256243F16B8B61E00B0A6AF /* AsyncSocket.m */; };
-		B256246A16B8B61E00B0A6AF /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256244116B8B61E00B0A6AF /* AsyncUdpSocket.m */; };
-		B256246B16B8B61E00B0A6AF /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B256244516B8B61E00B0A6AF /* DDAbstractDatabaseLogger.m */; };
-		B256246C16B8B61E00B0A6AF /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B256244716B8B61E00B0A6AF /* DDASLLogger.m */; };
-		B256246D16B8B61E00B0A6AF /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B256244916B8B61E00B0A6AF /* DDFileLogger.m */; };
-		B256246E16B8B61E00B0A6AF /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = B256244B16B8B61E00B0A6AF /* DDLog.m */; };
-		B256246F16B8B61E00B0A6AF /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B256244D16B8B61E00B0A6AF /* DDTTYLogger.m */; };
-		B256247016B8B61E00B0A6AF /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = B256245016B8B61E00B0A6AF /* JSONKit.m */; };
-		B256247116B8B61E00B0A6AF /* NNArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = B256245316B8B61E00B0A6AF /* NNArgs.m */; };
-		B256247216B8B61E00B0A6AF /* NNBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = B256245516B8B61E00B0A6AF /* NNBase64.m */; };
-		B256247316B8B61E00B0A6AF /* NNEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = B256245816B8B61E00B0A6AF /* NNEventEmitter.m */; };
-		B256247416B8B61E00B0A6AF /* NSString+NNUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B256245B16B8B61E00B0A6AF /* NSString+NNUtil.m */; };
-		B256247516B8B61E00B0A6AF /* NSTimer+NNUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B256245D16B8B61E00B0A6AF /* NSTimer+NNUtil.m */; };
-		B256247616B8B61E00B0A6AF /* NNWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256246116B8B61E00B0A6AF /* NNWebSocket.m */; };
-		B256247716B8B61E00B0A6AF /* NNWebSocketFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = B256246416B8B61E00B0A6AF /* NNWebSocketFrame.m */; };
-		B256247816B8B61E00B0A6AF /* NNWebSocketOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = B256246616B8B61E00B0A6AF /* NNWebSocketOptions.m */; };
-		B256247B16B8B6A500B0A6AF /* UnibaSocketIOConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = B256247A16B8B6A500B0A6AF /* UnibaSocketIOConnector.m */; };
+		B256243016B8B61600B0A6AF /* NNSocketIO.m in Sources */ = {isa = PBXBuildFile; fileRef = B256242116B8B61600B0A6AF /* NNSocketIO.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256243116B8B61600B0A6AF /* NNSocketIONamespace.m in Sources */ = {isa = PBXBuildFile; fileRef = B256242516B8B61600B0A6AF /* NNSocketIONamespace.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256243216B8B61600B0A6AF /* NNSocketIOOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = B256242716B8B61600B0A6AF /* NNSocketIOOptions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256243316B8B61600B0A6AF /* NNSocketIOPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256242916B8B61600B0A6AF /* NNSocketIOPacket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256243416B8B61600B0A6AF /* NNSocketIOParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B256242B16B8B61600B0A6AF /* NNSocketIOParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256243516B8B61600B0A6AF /* NNSocketIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256242D16B8B61600B0A6AF /* NNSocketIOSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256246716B8B61E00B0A6AF /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256243A16B8B61E00B0A6AF /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256246816B8B61E00B0A6AF /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256243C16B8B61E00B0A6AF /* GCDAsyncUdpSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256246916B8B61E00B0A6AF /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256243F16B8B61E00B0A6AF /* AsyncSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256246A16B8B61E00B0A6AF /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256244116B8B61E00B0A6AF /* AsyncUdpSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256246B16B8B61E00B0A6AF /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B256244516B8B61E00B0A6AF /* DDAbstractDatabaseLogger.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256246C16B8B61E00B0A6AF /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B256244716B8B61E00B0A6AF /* DDASLLogger.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256246D16B8B61E00B0A6AF /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B256244916B8B61E00B0A6AF /* DDFileLogger.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256246E16B8B61E00B0A6AF /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = B256244B16B8B61E00B0A6AF /* DDLog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256246F16B8B61E00B0A6AF /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B256244D16B8B61E00B0A6AF /* DDTTYLogger.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256247016B8B61E00B0A6AF /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = B256245016B8B61E00B0A6AF /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256247116B8B61E00B0A6AF /* NNArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = B256245316B8B61E00B0A6AF /* NNArgs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256247216B8B61E00B0A6AF /* NNBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = B256245516B8B61E00B0A6AF /* NNBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256247316B8B61E00B0A6AF /* NNEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = B256245816B8B61E00B0A6AF /* NNEventEmitter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256247416B8B61E00B0A6AF /* NSString+NNUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B256245B16B8B61E00B0A6AF /* NSString+NNUtil.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256247516B8B61E00B0A6AF /* NSTimer+NNUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B256245D16B8B61E00B0A6AF /* NSTimer+NNUtil.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256247616B8B61E00B0A6AF /* NNWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = B256246116B8B61E00B0A6AF /* NNWebSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256247716B8B61E00B0A6AF /* NNWebSocketFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = B256246416B8B61E00B0A6AF /* NNWebSocketFrame.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256247816B8B61E00B0A6AF /* NNWebSocketOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = B256246616B8B61E00B0A6AF /* NNWebSocketOptions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B256247B16B8B6A500B0A6AF /* UnibaSocketIOConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = B256247A16B8B6A500B0A6AF /* UnibaSocketIOConnector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B256247D16B8B6FA00B0A6AF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B256247C16B8B6FA00B0A6AF /* CFNetwork.framework */; };
 		B256248016B8B7E400B0A6AF /* UnibaMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B256247F16B8B7E400B0A6AF /* UnibaMenuViewController.m */; };
 		B256248216B9120700B0A6AF /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B256248116B9120700B0A6AF /* AssetsLibrary.framework */; };
+		B27B115316BBBEC300C58AAA /* NSDictionary+NewstepDynamicDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = B27B114E16BBBEC300C58AAA /* NSDictionary+NewstepDynamicDictionary.m */; };
+		B27B115416BBBEC300C58AAA /* NSMutableDictionary+NewstepNSMutableDictionaryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B27B115016BBBEC300C58AAA /* NSMutableDictionary+NewstepNSMutableDictionaryAdditions.m */; };
+		B27B115516BBBEC300C58AAA /* PHVDynamicDataSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = B27B115216BBBEC300C58AAA /* PHVDynamicDataSupport.m */; };
+		B27B115816BBBF0B00C58AAA /* NSMutableString+NewstepNSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B27B115716BBBF0B00C58AAA /* NSMutableString+NewstepNSStringAdditions.m */; };
+		B27B115B16BBBF4A00C58AAA /* NewstepRepresentedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B27B115A16BBBF4A00C58AAA /* NewstepRepresentedObject.m */; };
+		B27B115E16BBBF7A00C58AAA /* NewstepUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = B27B115D16BBBF7900C58AAA /* NewstepUUID.m */; };
+		B27B116116BBBFB300C58AAA /* PHVBaseDataSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = B27B116016BBBFB300C58AAA /* PHVBaseDataSupport.m */; };
+		B27B116416BBBFEE00C58AAA /* PHVDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = B27B116316BBBFEE00C58AAA /* PHVDataTypes.m */; };
+		B27B116716BBC01D00C58AAA /* UIAlertViewCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = B27B116616BBC01C00C58AAA /* UIAlertViewCategories.m */; };
+		B27B116916BBC23B00C58AAA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27B116816BBC23B00C58AAA /* QuartzCore.framework */; };
 		B28569F416BB6601002B3778 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B28569F316BB6601002B3778 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
@@ -160,6 +170,25 @@
 		B256247E16B8B7E400B0A6AF /* UnibaMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnibaMenuViewController.h; sourceTree = "<group>"; };
 		B256247F16B8B7E400B0A6AF /* UnibaMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnibaMenuViewController.m; sourceTree = "<group>"; };
 		B256248116B9120700B0A6AF /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		B27B114D16BBBEC300C58AAA /* NSDictionary+NewstepDynamicDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NewstepDynamicDictionary.h"; sourceTree = "<group>"; };
+		B27B114E16BBBEC300C58AAA /* NSDictionary+NewstepDynamicDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NewstepDynamicDictionary.m"; sourceTree = "<group>"; };
+		B27B114F16BBBEC300C58AAA /* NSMutableDictionary+NewstepNSMutableDictionaryAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+NewstepNSMutableDictionaryAdditions.h"; sourceTree = "<group>"; };
+		B27B115016BBBEC300C58AAA /* NSMutableDictionary+NewstepNSMutableDictionaryAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+NewstepNSMutableDictionaryAdditions.m"; sourceTree = "<group>"; };
+		B27B115116BBBEC300C58AAA /* PHVDynamicDataSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHVDynamicDataSupport.h; sourceTree = "<group>"; };
+		B27B115216BBBEC300C58AAA /* PHVDynamicDataSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHVDynamicDataSupport.m; sourceTree = "<group>"; };
+		B27B115616BBBF0A00C58AAA /* NSMutableString+NewstepNSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+NewstepNSStringAdditions.h"; sourceTree = "<group>"; };
+		B27B115716BBBF0B00C58AAA /* NSMutableString+NewstepNSStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableString+NewstepNSStringAdditions.m"; sourceTree = "<group>"; };
+		B27B115916BBBF4A00C58AAA /* NewstepRepresentedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewstepRepresentedObject.h; sourceTree = "<group>"; };
+		B27B115A16BBBF4A00C58AAA /* NewstepRepresentedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewstepRepresentedObject.m; sourceTree = "<group>"; };
+		B27B115C16BBBF7900C58AAA /* NewstepUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewstepUUID.h; sourceTree = "<group>"; };
+		B27B115D16BBBF7900C58AAA /* NewstepUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewstepUUID.m; sourceTree = "<group>"; };
+		B27B115F16BBBFB300C58AAA /* PHVBaseDataSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHVBaseDataSupport.h; sourceTree = "<group>"; };
+		B27B116016BBBFB300C58AAA /* PHVBaseDataSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHVBaseDataSupport.m; sourceTree = "<group>"; };
+		B27B116216BBBFEE00C58AAA /* PHVDataTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHVDataTypes.h; sourceTree = "<group>"; };
+		B27B116316BBBFEE00C58AAA /* PHVDataTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHVDataTypes.m; sourceTree = "<group>"; };
+		B27B116516BBC01C00C58AAA /* UIAlertViewCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAlertViewCategories.h; sourceTree = "<group>"; };
+		B27B116616BBC01C00C58AAA /* UIAlertViewCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAlertViewCategories.m; sourceTree = "<group>"; };
+		B27B116816BBC23B00C58AAA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B28569F316BB6601002B3778 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B2D70DA116BA68F7008CE708 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		B2D70DA316BA6904008CE708 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -171,6 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B27B116916BBC23B00C58AAA /* QuartzCore.framework in Frameworks */,
 				B28569F416BB6601002B3778 /* CoreLocation.framework in Frameworks */,
 				B256248216B9120700B0A6AF /* AssetsLibrary.framework in Frameworks */,
 				B256247D16B8B6FA00B0A6AF /* CFNetwork.framework in Frameworks */,
@@ -188,7 +218,6 @@
 		B20DBDAD16B7A2B200E04EE9 = {
 			isa = PBXGroup;
 			children = (
-				B28569F316BB6601002B3778 /* CoreLocation.framework */,
 				B20DBDBF16B7A2B200E04EE9 /* iPhoneClient */,
 				B20DBDB816B7A2B200E04EE9 /* Frameworks */,
 				B20DBDB716B7A2B200E04EE9 /* Products */,
@@ -206,6 +235,8 @@
 		B20DBDB816B7A2B200E04EE9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B27B116816BBC23B00C58AAA /* QuartzCore.framework */,
+				B28569F316BB6601002B3778 /* CoreLocation.framework */,
 				B2D70DA516BA69F5008CE708 /* libxml2.dylib */,
 				B2D70DA316BA6904008CE708 /* libz.dylib */,
 				B2D70DA116BA68F7008CE708 /* MobileCoreServices.framework */,
@@ -223,6 +254,7 @@
 		B20DBDBF16B7A2B200E04EE9 /* iPhoneClient */ = {
 			isa = PBXGroup;
 			children = (
+				B27B114C16BBBEAF00C58AAA /* UnibaHTTPRequest */,
 				B256243616B8B61E00B0A6AF /* vendor */,
 				B256241C16B8B61600B0A6AF /* NNSocketIO */,
 				B20DBDDF16B7A2D600E04EE9 /* Audio */,
@@ -414,6 +446,31 @@
 			path = NNWebSocket;
 			sourceTree = "<group>";
 		};
+		B27B114C16BBBEAF00C58AAA /* UnibaHTTPRequest */ = {
+			isa = PBXGroup;
+			children = (
+				B27B116516BBC01C00C58AAA /* UIAlertViewCategories.h */,
+				B27B116616BBC01C00C58AAA /* UIAlertViewCategories.m */,
+				B27B116216BBBFEE00C58AAA /* PHVDataTypes.h */,
+				B27B116316BBBFEE00C58AAA /* PHVDataTypes.m */,
+				B27B115F16BBBFB300C58AAA /* PHVBaseDataSupport.h */,
+				B27B116016BBBFB300C58AAA /* PHVBaseDataSupport.m */,
+				B27B115C16BBBF7900C58AAA /* NewstepUUID.h */,
+				B27B115D16BBBF7900C58AAA /* NewstepUUID.m */,
+				B27B115916BBBF4A00C58AAA /* NewstepRepresentedObject.h */,
+				B27B115A16BBBF4A00C58AAA /* NewstepRepresentedObject.m */,
+				B27B115616BBBF0A00C58AAA /* NSMutableString+NewstepNSStringAdditions.h */,
+				B27B115716BBBF0B00C58AAA /* NSMutableString+NewstepNSStringAdditions.m */,
+				B27B114D16BBBEC300C58AAA /* NSDictionary+NewstepDynamicDictionary.h */,
+				B27B114E16BBBEC300C58AAA /* NSDictionary+NewstepDynamicDictionary.m */,
+				B27B114F16BBBEC300C58AAA /* NSMutableDictionary+NewstepNSMutableDictionaryAdditions.h */,
+				B27B115016BBBEC300C58AAA /* NSMutableDictionary+NewstepNSMutableDictionaryAdditions.m */,
+				B27B115116BBBEC300C58AAA /* PHVDynamicDataSupport.h */,
+				B27B115216BBBEC300C58AAA /* PHVDynamicDataSupport.m */,
+			);
+			name = UnibaHTTPRequest;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -520,6 +577,15 @@
 				B256247816B8B61E00B0A6AF /* NNWebSocketOptions.m in Sources */,
 				B256247B16B8B6A500B0A6AF /* UnibaSocketIOConnector.m in Sources */,
 				B256248016B8B7E400B0A6AF /* UnibaMenuViewController.m in Sources */,
+				B27B115316BBBEC300C58AAA /* NSDictionary+NewstepDynamicDictionary.m in Sources */,
+				B27B115416BBBEC300C58AAA /* NSMutableDictionary+NewstepNSMutableDictionaryAdditions.m in Sources */,
+				B27B115516BBBEC300C58AAA /* PHVDynamicDataSupport.m in Sources */,
+				B27B115816BBBF0B00C58AAA /* NSMutableString+NewstepNSStringAdditions.m in Sources */,
+				B27B115B16BBBF4A00C58AAA /* NewstepRepresentedObject.m in Sources */,
+				B27B115E16BBBF7A00C58AAA /* NewstepUUID.m in Sources */,
+				B27B116116BBBFB300C58AAA /* PHVBaseDataSupport.m in Sources */,
+				B27B116416BBBFEE00C58AAA /* PHVDataTypes.m in Sources */,
+				B27B116716BBC01D00C58AAA /* UIAlertViewCategories.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +680,7 @@
 		B20DBDDD16B7A2B200E04EE9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: KOICHIRO MORI (V5QZDN7ZWN)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iPhoneClient/iPhoneClient-Prefix.pch";
@@ -630,6 +697,7 @@
 		B20DBDDE16B7A2B200E04EE9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: UNIBA INC.";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iPhoneClient/iPhoneClient-Prefix.pch";

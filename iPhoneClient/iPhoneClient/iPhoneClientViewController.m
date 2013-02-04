@@ -11,6 +11,7 @@
 #import "FSKSerialGenerator.h"
 #import "FSKRecognizer.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "NSMutableString+NewstepNSStringAdditions.h"
 
 @interface iPhoneClientViewController ()
 
@@ -253,7 +254,6 @@ NSString * portNum = @"3000";
         NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:
                                         AVVideoCodecJPEG, AVVideoCodecKey, nil];
         self.stillImageOutput.outputSettings = outputSettings;
-        [outputSettings release];
         
         // セッションに出力を追加
         [self.captureSession addOutput:self.stillImageOutput];
@@ -301,7 +301,7 @@ NSString * portNum = @"3000";
                                                self.lastImageAssetUrl = assetURL;
                                                
                                                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
-                                                   [self getImageData];
+                                                   [self sendImageData];
                                                });
                                            }];
                     
@@ -324,61 +324,13 @@ NSString * portNum = @"3000";
 }
 
 #pragma mark Image Upload Connection
--(void) postImageRequestWithData:(NSDictionary *)params url:(NSString*)url_  {
-    NSURL *url = [NSURL URLWithString:url_];
-    
-    // BODY の作成
-    NSString *bodyString = [self _buildParameters:params];
-    NSData   *httpBody   = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
-    
-    NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:url
-                                                            cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                                        timeoutInterval:15.0];
-    // POST の HTTP Request を作成
-    [req setHTTPMethod:@"POST"];
-    [req setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
-    [req setValue:[NSString stringWithFormat:@"%d", [httpBody length]] forHTTPHeaderField:@"Content-Length"];
-    [req setHTTPBody:httpBody];
-    [req setHTTPShouldHandleCookies:YES];
-    
-    NSURLConnection *conn;
-    conn = [NSURLConnection connectionWithRequest:req delegate:self];
-    
-    if (conn) {
-        NSLog(@"NSURLConnection create success");
-    } else {
-        NSLog(@"error : conn is nil");
-    }
-}
-- (NSString*)_buildParameters:(NSDictionary *)params {
-    NSMutableString *s = [NSMutableString string];
-    
-    NSString *key;
-    for ( key in params ) {
-        NSString *uriEncodedValue = [self _uriEncodeForString:[params objectForKey:key]];
-        [s appendFormat:@"%@=%@&", key, uriEncodedValue];
-    }
-    
-    if ( [s length] > 0 ) {
-        [s deleteCharactersInRange:NSMakeRange([s length]-1, 1)];
-    }
-    return s;
-}
-
-- (NSString*)_uriEncodeForString:(NSString *)str {
-    return [((NSString*)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                (CFStringRef)str,
-                                                                NULL,
-                                                                (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                kCFStringEncodingUTF8)));
-}
 
 //-(NSDictionary*) getCurrentCoordinates {
 //    NSDictionary *dict;
 //    return dict;
 //}
 
--(void) getImageData {
+-(void) sendImageData {
     ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
     [library assetForURL:self.lastImageAssetUrl resultBlock:^(ALAsset *asset) {
         ALAssetRepresentation *repr = [asset defaultRepresentation];
@@ -401,33 +353,20 @@ NSString * portNum = @"3000";
     float battery = [UIDevice currentDevice].batteryLevel;
     NSNumber *parcentOfBattery;
     parcentOfBattery = [NSNumber numberWithInt:( battery * 100 )];
+        
+    NSMutableDictionary <IphoneClientRequest> *requestDict = [NSMutableDictionary new];
     
-//    [dict setValue:data_ forKey:@"photo"];
-//    [dict setValue:[NSDate date] forKey:@"tomestamp"];
-//    [dict setValue:[NSNumber numberWithFloat:[self.panValueLabel.text floatValue]] forKey:@"x"];
-//    [dict setValue:[NSNumber numberWithFloat:[self.pitchValueLabel.text floatValue]]  forKey:@"y"];
-//    [dict setValue:parcentOfBattery forKey:@"battery"];
+    requestDict.photo = data_;
+    requestDict.timestamp = [[NSDate date]description]; //フォーマットした方がいい
+    requestDict.x = self.panValueLabel.text;
+    requestDict.y = self.pitchValueLabel.text;
+    requestDict.battery = [NSString stringWithFormat:@"%@",parcentOfBattery];
     
-    //buid with string at all.
-    [dict setValue:[NSString stringWithFormat:@"%@",data_] forKey:@"photo"];
-    [dict setValue:[NSString stringWithFormat:@"%@",[NSDate date]] forKey:@"timestamp"];
-    [dict setValue:self.panValueLabel.text forKey:@"x"];
-    [dict setValue:self.pitchValueLabel.text forKey:@"y"];
-    [dict setValue:[NSString stringWithFormat:@"%@",parcentOfBattery] forKey:@"battery"];
+    NSString *urlString = [NSString stringWithFormat:@"http://%@:%@/photos", hostname, portNum];
+    requestDict.url = urlString.url;
     
-    [self postImageRequestWithData:dict url:[NSString stringWithFormat:@"%@:%@/photos", hostname, portNum]];
-}
+    [requestDict post];
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    NSLog(@"didReceiveResponse");
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSLog(@"didReceiveData");
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSLog(@"connectionDidFinishLoading");
 }
 
 
