@@ -252,7 +252,7 @@ NSString * portNum = @"3000";
         
         
         // ビデオの解像度 High
-        if ([captureSession canSetSessionPreset:AVCaptureSessionPresetHigh]) {
+        if ([self.captureSession canSetSessionPreset:AVCaptureSessionPresetHigh]) {
             self.captureSession.sessionPreset = AVCaptureSessionPresetHigh;
         }
         
@@ -290,7 +290,7 @@ NSString * portNum = @"3000";
             }
             
             // 静止画をキャプチャする
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{// Delay execution of my block for 2 seconds.
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{// Delay execution of my block for 2 seconds.
 
                 [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection
                                                                    completionHandler:
