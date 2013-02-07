@@ -326,7 +326,7 @@ static dispatch_group_t _PHVWiFiTransferGroup = NULL;
 				NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&requestResponse error:&responseError];
 				
 				if (nil != responseError) {
-					//NSLog(@"self.json = ",responseError);
+					NSLog(@"response error = %@",responseError);
 					//[UIAlertView showAlertWithError:responseError andAutoDismissWithDelayInSeconds:3.0f];
 				}
 				

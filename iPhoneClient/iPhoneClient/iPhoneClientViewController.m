@@ -59,7 +59,11 @@ NSString * portNum = @"3000";
     
     self.connector = [[UnibaSocketIOConnector alloc] initWithUrl:hostname onPort:portNum onRoom:nil];
     
-    [self.connector connectToUnicastServer];
+    if( @"" == hostname ){
+        [self.connector connectToUnicastServer];
+    } else {
+        [self.connector disconnect];
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSetUrlNotification:) name:@"recivedSetUrlMessage" object:nil];
     
