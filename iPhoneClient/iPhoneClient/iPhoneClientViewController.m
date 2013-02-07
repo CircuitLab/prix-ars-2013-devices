@@ -37,7 +37,7 @@
 
 @synthesize locationManager;
 
-NSString * hostname = @"http://moxus.local";
+NSString * hostname = @"moxus.local";
 NSString * portNum = @"3000";
 
 #pragma mark - View Contrller Life Cycle
@@ -183,7 +183,7 @@ NSString * portNum = @"3000";
 
 #pragma mark Softmodem 通信
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	[self.generator writeByte:0xff];
+	//[self.generator writeByte:0xff];
 	[self.generator writeBytes:[textField.text UTF8String] length:[textField.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
 	textField.text = @"";
     [self.serialTextField endEditing:YES];
