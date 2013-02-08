@@ -184,14 +184,20 @@ NSString * portNum = @"3000";
 #pragma mark Softmodem 通信
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	//[self.generator writeByte:0xff];
-	[self.generator writeBytes:[textField.text UTF8String] length:[textField.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
+    int len;
+    len = [textField.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    [self.generator writeByte:0xff];
+	[self.generator writeBytes:[textField.text UTF8String] length:len];
 	textField.text = @"";
     [self.serialTextField endEditing:YES];
 	return YES;
 }
 
 - (void)sendGenerator:( NSString* )string_ {
-    [self.generator writeBytes:[string_ UTF8String] length:[string_ lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
+    int len;
+    len = [string_ lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    [self.generator writeByte:0xff];
+    [self.generator writeBytes:[string_ UTF8String] length:len];
 }
 
 - (void) receivedChar:(char)input

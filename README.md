@@ -2,8 +2,7 @@
 
 IPhone & Arduino applications for Prix Ars 2013 competition.
 
-##Requirement
-
+Requirement
 ---
 
 ###iPhone
@@ -19,8 +18,7 @@ IPhone & Arduino applications for Prix Ars 2013 competition.
  - SoftModem
 [http://code.google.com/p/arms22/downloads/detail?name=SoftModem-005.zip&can=2&q=](http://code.google.com/p/arms22/downloads/detail?name=SoftModem-005.zip&can=2&q=)
 
-##Credit
-
+Credit
 ---
 
 Copyright (c) 2013 Curcuit Lab. <info@uniba.jp>
