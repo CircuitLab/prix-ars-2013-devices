@@ -50,11 +50,13 @@
 @property (strong) CLLocationManager *locationManager;
 
 @property double longtitude, latitude;
+@property float currentX, currentY;
 
 -(void)initConnector;
 - (IBAction)slideFirstSlider:(id)sender;
 - (IBAction)slideSecondSlider:(id)sender;
 - (IBAction)capture:(id)sender;
 - (void) receiveSetUrlNotification:(NSNotification *)notification;
+- (NSString*)buildPacket:(float)x y:(float)y;
 
 @end

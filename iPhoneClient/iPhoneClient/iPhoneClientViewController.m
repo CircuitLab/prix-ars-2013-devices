@@ -52,6 +52,9 @@ NSString * portNum = @"3000";
     locationManager.desiredAccuracy = kCLLocationAccuracyBest; // 位置測定の望みの精度を設定
     locationManager.distanceFilter = kCLDistanceFilterNone; // 位置情報更新の目安距離
     
+    self.currentX = 0;
+    self.currentY = 0;
+    
     [self updateCurrentCoordinate];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveJsonNotification:) name:@"recivedGetMessage" object:nil];
@@ -111,18 +114,24 @@ NSString * portNum = @"3000";
     UISlider* slider = (UISlider*)sender;
     NSString* valueText = [NSString stringWithFormat:@"%f",slider.value];
     self.panValueLabel.text = valueText;
+    self.currentX = [valueText floatValue];
 
     NSDictionary *messageDictionary = [NSDictionary dictionaryWithObjectsAndKeys:valueText, @"value_id_1" , nil];
     [self.connector sendEventToUnicastServer:messageDictionary forEvent:@"slide_1"];
+    
+    [self sendGenerator: [self buildPacket:self.currentX y:self.currentY] ];
 }
 
 - (IBAction)slideSecondSlider:(id)sender {
     UISlider* slider = (UISlider*)sender;
     NSString* valueText = [NSString stringWithFormat:@"%f",slider.value];
     self.pitchValueLabel.text = valueText;
+    self.currentY = [valueText floatValue];
     
     NSDictionary *messageDictionary = [NSDictionary dictionaryWithObjectsAndKeys:valueText, @"value_id_2" , nil];
     [self.connector sendEventToUnicastServer:messageDictionary forEvent:@"slide_2"];
+    
+    [self sendGenerator: [self buildPacket:self.currentX y:self.currentY] ];
 }
 
 #pragma mark - Node Connection Notification メソッド
@@ -154,12 +163,16 @@ NSString * portNum = @"3000";
         if( position > 0 ){
             
             if( nil != [position objectForKey:@"x"] ) {
-                self.pitchValueLabel.text = [position objectForKey:@"x"];
+                self.currentX = [[position objectForKey:@"x"] floatValue];
+                self.pitchValueLabel.text = [NSString stringWithFormat:@"%f",self.currentX];
+                
             }
             if( nil != [position objectForKey:@"y"] ) {
-                self.pitchValueLabel.text = [position objectForKey:@"y"];
+                self.currentY = [[position objectForKey:@"y"] floatValue];
+                self.pitchValueLabel.text = [NSString stringWithFormat:@"%f",self.currentY];
             }
-//            sendGenerator "XX
+            
+            [self sendGenerator: [self buildPacket:self.currentX y:self.currentY] ];
         }
     } else if([[notification name] isEqualToString:@"recivedTakeMessage"]){
             [self takePhoto];
@@ -198,6 +211,12 @@ NSString * portNum = @"3000";
     len = [string_ lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
     [self.generator writeByte:0xff];
     [self.generator writeBytes:[string_ UTF8String] length:len];
+}
+
+-(NSString*)buildPacket:(float)x y:(float)y {
+    NSString *str = @"A";
+    str = [NSString stringWithFormat:@"%@%c%c",str,(int)(x*256), (int)(y*256)];
+    return str;
 }
 
 - (void) receivedChar:(char)input
@@ -373,8 +392,8 @@ NSString * portNum = @"3000";
     
     requestDict.photo = [data_ base64];
     requestDict.timestamp = [[NSDate date]description]; //フォーマットした方がいい
-    requestDict.x = self.panValueLabel.text;
-    requestDict.y = self.pitchValueLabel.text;
+    requestDict.x = [NSString stringWithFormat:@"%f", self.currentX];
+    requestDict.y = [NSString stringWithFormat:@"%f", self.currentY];
     requestDict.battery = [NSString stringWithFormat:@"%@",parcentOfBattery];
     
     NSString *urlString = [NSString stringWithFormat:@"http://%@:%@/photos", hostname, portNum];
