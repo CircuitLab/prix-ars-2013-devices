@@ -199,8 +199,9 @@ NSString * portNum = @"3000";
 	//[self.generator writeByte:0xff];
     int len;
     len = [textField.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-    [self.generator writeByte:0xff];
+    [self.generator writeByte:112];
 	[self.generator writeBytes:[textField.text UTF8String] length:len];
+    [self.generator writeByte:13];
 	textField.text = @"";
     [self.serialTextField endEditing:YES];
 	return YES;
@@ -208,14 +209,21 @@ NSString * portNum = @"3000";
 
 - (void)sendGenerator:( NSString* )string_ {
     int len;
-    len = [string_ lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-    [self.generator writeByte:0xff];
-    [self.generator writeBytes:[string_ UTF8String] length:len];
+//    len = [string_ lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+//    [self.generator writeByte:112];
+//    [self.generator writeBytes:[string_ UTF8String] length:len];
+//    [self.generator writeByte:13];
+    len = [string_ length];
+    [self.generator writeByte:112]; //means 'p'
+    for (int i = 0; i<len; i++) {
+        [self.generator writeByte:[string_ characterAtIndex:0]];
+    }
+    [self.generator writeByte:13];  //means '\n'
 }
 
 -(NSString*)buildPacket:(float)x y:(float)y {
-    NSString *str = @"A";
-    str = [NSString stringWithFormat:@"%@%c%c",str,(int)(x*256), (int)(y*256)];
+    NSString *str = @"";
+    str = [NSString stringWithFormat:@"%d_%d",(int)(x*256), (int)(y*256)];
     return str;
 }
 
