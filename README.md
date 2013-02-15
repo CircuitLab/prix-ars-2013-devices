@@ -13,7 +13,7 @@ Requirement
  - SoftModemTerminal
 [http://code.google.com/p/arms22/downloads/detail?name=SoftModemTerminal-004.zip](http://code.google.com/p/arms22/downloads/detail?name=SoftModemTerminal-004.zip)
 
-###Arduinon
+###Arduino
 
  - SoftModem
 [http://code.google.com/p/arms22/downloads/detail?name=SoftModem-005.zip&can=2&q=](http://code.google.com/p/arms22/downloads/detail?name=SoftModem-005.zip&can=2&q=)
