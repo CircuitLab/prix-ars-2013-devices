@@ -209,21 +209,28 @@ NSString * portNum = @"3000";
 
 - (void)sendGenerator:( NSString* )string_ {
     int len;
-//    len = [string_ lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-//    [self.generator writeByte:112];
-//    [self.generator writeBytes:[string_ UTF8String] length:len];
-//    [self.generator writeByte:13];
-    len = [string_ length];
-    [self.generator writeByte:112]; //means 'p'
-    for (int i = 0; i<len; i++) {
-        [self.generator writeByte:[string_ characterAtIndex:0]];
-    }
-    [self.generator writeByte:13];  //means '\n'
+    len = [string_ lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    
+    [self.generator writeByte:0xff];
+    [self.generator writeBytes:[string_ UTF8String] length:len];
+    
+    NSLog(@"%@",string_);
 }
 
 -(NSString*)buildPacket:(float)x y:(float)y {
-    NSString *str = @"";
-    str = [NSString stringWithFormat:@"%d_%d",(int)(x*256), (int)(y*256)];
+    NSString *str = @"XXA";
+    
+    unsigned char xValue_high;
+    unsigned char xValue_low;
+    unsigned char yValue_high;
+    unsigned char yValue_low;
+    
+    xValue_high = (unsigned char)((int)(x*256) >> 8 );
+    xValue_low = (unsigned char)((int)(x*256) & 255 );
+    yValue_high = (unsigned char)((int)(y*256) >> 8 );
+    yValue_low = (unsigned char)((int)(y*256) & 255 );
+    
+    str = [NSString stringWithFormat:@"%@%c%c%c%c", str, xValue_high, xValue_low, yValue_high, yValue_low ];
     return str;
 }
 
