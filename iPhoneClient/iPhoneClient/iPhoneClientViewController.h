@@ -21,6 +21,7 @@
 
 @protocol IphoneClientRequest <PHVJSONURL>
 @property Base64 *photo;
+@property NSString *udid;
 @property NSString *timestamp;
 @property NSString *x;
 @property NSString *y;

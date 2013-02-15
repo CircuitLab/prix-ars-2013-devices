@@ -399,6 +399,7 @@ NSString * portNum = @"3000";
     NSMutableDictionary <IphoneClientRequest> *requestDict = [NSMutableDictionary new];
     
     requestDict.photo = [data_ base64];
+    requestDict.udid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     requestDict.timestamp = [[NSDate date]description]; //フォーマットした方がいい
     requestDict.x = [NSString stringWithFormat:@"%f", self.currentX];
     requestDict.y = [NSString stringWithFormat:@"%f", self.currentY];
