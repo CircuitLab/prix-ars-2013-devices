@@ -247,6 +247,11 @@ NSString * portNum = @"3000";
 - (void)updateCurrentCoordinate {
     [locationManager startUpdatingLocation];
     [locationManager startUpdatingHeading];
+    
+     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+         [locationManager stopUpdatingHeading];
+         [locationManager stopUpdatingLocation];
+     });
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
