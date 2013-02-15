@@ -121,7 +121,7 @@ NSString * portNum = @"3000";
     NSDictionary *messageDictionary = [NSDictionary dictionaryWithObjectsAndKeys:valueText, @"value_id_1" , nil];
     [self.connector sendEventToUnicastServer:messageDictionary forEvent:@"slide_1"];
     
-    [self sendGenerator: [self buildPacket:self.currentX y:self.currentY] ];
+    [self sendGenerator: [self buildPacketUint8:self.currentX y:self.currentY] ];
 }
 
 - (IBAction)slideSecondSlider:(id)sender {
@@ -133,7 +133,7 @@ NSString * portNum = @"3000";
     NSDictionary *messageDictionary = [NSDictionary dictionaryWithObjectsAndKeys:valueText, @"value_id_2" , nil];
     [self.connector sendEventToUnicastServer:messageDictionary forEvent:@"slide_2"];
     
-    [self sendGenerator: [self buildPacket:self.currentX y:self.currentY] ];
+    [self sendGenerator: [self buildPacketUint8:self.currentX y:self.currentY] ];
 }
 
 #pragma mark - Node Connection Notification メソッド
@@ -174,7 +174,7 @@ NSString * portNum = @"3000";
                 self.pitchValueLabel.text = [NSString stringWithFormat:@"%f",self.currentY];
             }
             
-            [self sendGenerator: [self buildPacket:self.currentX y:self.currentY] ];
+            [self sendGenerator: [self buildPacketUint8:self.currentX y:self.currentY] ];
         }
     } else if([[notification name] isEqualToString:@"recivedTakeMessage"]){
             [self takePhoto];
@@ -209,14 +209,14 @@ NSString * portNum = @"3000";
 	return YES;
 }
 
-- (void)sendGenerator:( NSString* )string_ {
+- (void)sendGenerator:( UInt8* )string_ {
     int len;
-    len = [string_ lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    //len = [string_ lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
     
     [self.generator writeByte:0xff];
-    [self.generator writeBytes:[string_ UTF8String] length:len];
+    [self.generator writeBytes:string_ length:7];
     
-    NSLog(@"%@",string_);
+   // NSLog(@"%@",string_);
 }
 
 -(NSString*)buildPacket:(float)x y:(float)y {
@@ -232,7 +232,20 @@ NSString * portNum = @"3000";
     yValue_high = (unsigned char)((int)(y*1024) >> 8 );
     yValue_low = (unsigned char)((int)(y*1024) & 255 );
     
-    str = [NSString stringWithFormat:@"%@%c%c%c%c", str, xValue_high, xValue_low, yValue_high, yValue_low ];
+    str = [NSString stringWithFormat:@"%@%c%c%c%c___%d_%d", str, xValue_high, xValue_low, yValue_high, yValue_low, (int)(x*1024), (int)(y*1024) ];
+    return str;
+}
+
+-(UInt8 *)buildPacketUint8:(float)x y:(float)y {
+    UInt8 str[7];
+    str[0] = 'X';
+    str[1] = 'X';
+    str[2] = 'A';
+    
+    str[3] = (unsigned char)((int)(x*1024) >> 8 );
+    str[4] = (unsigned char)((int)(x*1024) & 255 );
+    str[5] = (unsigned char)((int)(y*1024) >> 8 );
+    str[6] = (unsigned char)((int)(y*1024) & 255 );
     return str;
 }
 

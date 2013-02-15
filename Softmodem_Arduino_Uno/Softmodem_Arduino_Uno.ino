@@ -46,13 +46,13 @@ void loop() {
            int degX_h =  buffer.get();
            int degX_l =  buffer.get();
            int degY_h =  buffer.get();
-           int degY_h =  buffer.get();
+           int degY_l=  buffer.get();
            
            int degX = ( degX_h<<8 ) + degX_l;
            int degY = ( degY_h<<8 ) + degY_l;
            
            Serial.println("A received");
-           servo.write( map( degX, 0, 256, 0, 180 ) );
+           servo.write( map( degX, 0, 1024, 0, 180 ) );
            Serial.println(degX);
            Serial.println(degY);
            buffer.clear();

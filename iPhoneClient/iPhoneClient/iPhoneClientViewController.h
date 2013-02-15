@@ -61,6 +61,8 @@
 - (IBAction)capture:(id)sender;
 - (void) receiveSetUrlNotification:(NSNotification *)notification;
 - (NSString*)buildPacket:(float)x y:(float)y;
+- (UInt8 *)buildPacketUint8:(float)x y:(float)y;
+    
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading;
 - (BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager;
 
