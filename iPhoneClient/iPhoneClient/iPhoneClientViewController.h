@@ -38,6 +38,7 @@
 @property (strong) IBOutlet UILabel * panValueLabel;
 @property (strong) IBOutlet UILabel *pitchValueLabel;
 @property (strong) IBOutlet UITextView * consoleTextField;
+@property (strong) IBOutlet UILabel *compassDirectionLabel;
 
 @property (nonatomic, retain) AudioSignalAnalyzer* analyzer;
 @property (nonatomic, retain) FSKSerialGenerator* generator;
@@ -49,6 +50,7 @@
 @property (strong) NSURL *lastImageAssetUrl;
 
 @property (strong) CLLocationManager *locationManager;
+@property (assign) CLLocationDirection currentDirection;
 
 @property double longtitude, latitude;
 @property float currentX, currentY;
@@ -59,5 +61,7 @@
 - (IBAction)capture:(id)sender;
 - (void) receiveSetUrlNotification:(NSNotification *)notification;
 - (NSString*)buildPacket:(float)x y:(float)y;
+- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading;
+- (BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager;
 
 @end

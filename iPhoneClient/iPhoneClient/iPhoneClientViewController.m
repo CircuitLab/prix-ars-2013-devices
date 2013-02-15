@@ -25,6 +25,7 @@
 @synthesize panValueLabel;
 @synthesize pitchValueLabel;
 @synthesize consoleTextField;
+@synthesize compassDirectionLabel;
 
 @synthesize analyzer;
 @synthesize generator;
@@ -51,6 +52,7 @@ NSString * portNum = @"3000";
     locationManager.delegate = self; // デリゲート設定
     locationManager.desiredAccuracy = kCLLocationAccuracyBest; // 位置測定の望みの精度を設定
     locationManager.distanceFilter = kCLDistanceFilterNone; // 位置情報更新の目安距離
+    locationManager.headingFilter = kCLHeadingFilterNone;
     
     self.currentX = 0;
     self.currentY = 0;
@@ -225,10 +227,10 @@ NSString * portNum = @"3000";
     unsigned char yValue_high;
     unsigned char yValue_low;
     
-    xValue_high = (unsigned char)((int)(x*256) >> 8 );
-    xValue_low = (unsigned char)((int)(x*256) & 255 );
-    yValue_high = (unsigned char)((int)(y*256) >> 8 );
-    yValue_low = (unsigned char)((int)(y*256) & 255 );
+    xValue_high = (unsigned char)((int)(x*1024) >> 8 );
+    xValue_low = (unsigned char)((int)(x*1024) & 255 );
+    yValue_high = (unsigned char)((int)(y*1024) >> 8 );
+    yValue_low = (unsigned char)((int)(y*1024) & 255 );
     
     str = [NSString stringWithFormat:@"%@%c%c%c%c", str, xValue_high, xValue_low, yValue_high, yValue_low ];
     return str;
@@ -244,6 +246,7 @@ NSString * portNum = @"3000";
 #pragma mark Get Coordinate
 - (void)updateCurrentCoordinate {
     [locationManager startUpdatingLocation];
+    [locationManager startUpdatingHeading];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
@@ -418,6 +421,18 @@ NSString * portNum = @"3000";
     [requestDict post];
 
 }
+
+
+#pragma mark Location Compass delegate
+-(void) locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
+    self.currentDirection = newHeading.magneticHeading;
+    self.compassDirectionLabel.text = [NSString stringWithFormat:@"%f", self.currentDirection];
+}
+
+-(BOOL) locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager {
+    return YES;
+}
+
 
 
 @end
