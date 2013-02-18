@@ -62,6 +62,7 @@ NSString * portNum = @"3000";
     [self updateCurrentCoordinate];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveJsonNotification:) name:@"recivedGetMessage" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recivedTakeNotifivation:) name:@"recivedTakeMessage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNodeConnectionNotification:) name:@"recivedConnectionData" object:nil];
     
     self.connector = [[UnibaSocketIOConnector alloc] initWithUrl:[NSString stringWithFormat:@"%@",hostname ] onPort:portNum onRoom:@"/uplook"];
@@ -148,7 +149,7 @@ NSString * portNum = @"3000";
         self.consoleTextField.text = @"connected";
         NSMutableDictionary *helloDict = [NSMutableDictionary dictionary];
         
-        [helloDict setValue:[[[UIDevice currentDevice] identifierForVendor] UUIDString] forKey:@"udid"];
+        [helloDict setValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"udid"];
         [helloDict setValue:[NSNumber numberWithDouble:self.latitude] forKey:@"latitude"];
         [helloDict setValue:[NSNumber numberWithDouble:self.longtitude] forKey:@"longtitude"];
         [connector sendEventToUnicastServer:helloDict forEvent:@"hello"];
@@ -183,6 +184,12 @@ NSString * portNum = @"3000";
         }
     } else if([[notification name] isEqualToString:@"recivedTakeMessage"]){
             [self takePhoto];
+    }
+}
+
+-(void) recivedTakeNotifivation:(NSNotification *)notification {
+    if([[notification name] isEqualToString:@"recivedTakeMessage"]){
+        [self takePhoto];
     }
 }
 
@@ -432,7 +439,7 @@ NSString * portNum = @"3000";
     NSMutableDictionary <IphoneClientRequest> *requestDict = [NSMutableDictionary new];
     
     requestDict.photo = [data_ base64];
-    requestDict.udid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    requestDict.udid = [[UIDevice currentDevice] uniqueIdentifier];
     requestDict.timestamp = [[NSDate date]description]; //フォーマットした方がいい
     requestDict.x = [NSString stringWithFormat:@"%f", self.currentX];
     requestDict.y = [NSString stringWithFormat:@"%f", self.currentY];
@@ -452,7 +459,7 @@ NSString * portNum = @"3000";
         
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         
-        [dict setValue:[[[UIDevice currentDevice] identifierForVendor] UUIDString] forKey:@"udid"];
+        [dict setValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"udid"];
         [dict setValue:[NSNumber numberWithFloat:self.currentX] forKey:@"x"];
         [dict setValue:[NSNumber numberWithFloat:self.currentY] forKey:@"y"];
         [UIDevice currentDevice].batteryMonitoringEnabled = YES;
