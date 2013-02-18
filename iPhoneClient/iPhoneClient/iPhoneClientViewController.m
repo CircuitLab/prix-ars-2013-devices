@@ -447,6 +447,7 @@ NSString * portNum = @"3000";
 
 #pragma mark Emit Status
 - (void) emitStatus:(NSTimer*)timer {
+    [self updateCurrentCoordinate];
     if ([self.connector isConnectsocketIONodeServerUnicast]) {
         
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
