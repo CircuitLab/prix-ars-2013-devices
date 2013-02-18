@@ -113,6 +113,7 @@ NSString * portNum = @"3000";
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"recivedConnectionData"];
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"recivedSetUrlMessage"];
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"recivedViewPointMessage"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"recivedTakeMessage"];
     [self.timer  invalidate];
 }
 
