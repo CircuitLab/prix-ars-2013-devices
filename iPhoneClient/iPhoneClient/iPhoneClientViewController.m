@@ -38,10 +38,12 @@
 
 @synthesize locationManager;
 
+@synthesize timer;
+
 NSString * hostname = @"moxus.local";
 NSString * portNum = @"3000";
 
-#pragma mark - View Contrller Life Cycle
+#pragma mark - View Controller Life Cycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -94,6 +96,8 @@ NSString * portNum = @"3000";
 	[analyzer addRecognizer:recognizer];
     self.serialTextField.delegate = self;
     
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:300.0f target:self selector:@selector(emitStatus:) userInfo:nil repeats:YES ];
+    [self.timer fire];
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,6 +112,7 @@ NSString * portNum = @"3000";
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"recivedConnectionData"];
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"recivedSetUrlMessage"];
     [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:@"recivedViewPointMessage"];
+    [self.timer  invalidate];
 }
 
 
@@ -440,6 +445,26 @@ NSString * portNum = @"3000";
 
 }
 
+#pragma mark Emit Status
+- (void) emitStatus:(NSTimer*)timer {
+    if ([self.connector isConnectsocketIONodeServerUnicast]) {
+        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        
+        [dict setValue:[[[UIDevice currentDevice] identifierForVendor] UUIDString] forKey:@"udid"];
+        [dict setValue:[NSNumber numberWithFloat:self.currentX] forKey:@"x"];
+        [dict setValue:[NSNumber numberWithFloat:self.currentY] forKey:@"y"];
+        [UIDevice currentDevice].batteryMonitoringEnabled = YES;
+        float battery = [UIDevice currentDevice].batteryLevel;
+        NSNumber *parcentOfBattery;
+        parcentOfBattery = [NSNumber numberWithInt:( battery * 100 )];
+        [dict setValue:parcentOfBattery forKey:@"battery"];
+        
+        [dict setValue:[NSNumber numberWithFloat:self.currentDirection] forKey:@"compass"];
+
+        [self.connector sendEventToUnicastServer:dict forEvent:@"status"];
+    }
+};
 
 #pragma mark Location Compass delegate
 -(void) locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
