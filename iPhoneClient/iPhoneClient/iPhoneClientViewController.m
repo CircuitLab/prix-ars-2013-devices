@@ -62,7 +62,7 @@ NSString * portNum = @"3000";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveJsonNotification:) name:@"recivedGetMessage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNodeConnectionNotification:) name:@"recivedConnectionData" object:nil];
     
-    self.connector = [[UnibaSocketIOConnector alloc] initWithUrl:hostname onPort:portNum onRoom:nil];
+    self.connector = [[UnibaSocketIOConnector alloc] initWithUrl:[NSString stringWithFormat:@"%@",hostname ] onPort:portNum onRoom:@"/uplook"];
     
     if( @"" == hostname ){
         [self.connector connectToUnicastServer];
@@ -242,10 +242,10 @@ NSString * portNum = @"3000";
     str[1] = 'X';
     str[2] = 'A';
     
-    str[3] = (unsigned char)((int)(x*1024) >> 8 );
-    str[4] = (unsigned char)((int)(x*1024) & 255 );
-    str[5] = (unsigned char)((int)(y*1024) >> 8 );
-    str[6] = (unsigned char)((int)(y*1024) & 255 );
+    str[3] = (UInt8)((int)(x*1024) >> 8 );
+    str[4] = (UInt8)((int)(x*1024) & 255 );
+    str[5] = (UInt8)((int)(y*1024) >> 8 );
+    str[6] = (UInt8)((int)(y*1024) & 255 );
     return str;
 }
 

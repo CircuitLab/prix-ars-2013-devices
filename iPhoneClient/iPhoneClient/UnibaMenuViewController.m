@@ -75,6 +75,8 @@
     
     [_urlDictionary setValue:_portInputText.text forKey:@"port"];
     
+    [_urlDictionary setValue:@"/uplook" forKey:@"room"];
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
@@ -121,7 +123,7 @@
     
     [_urlDictionary setValue:_portInputText.text forKey:@"port"];
     
-//    [_urlDictionary setValue:_roomInputText.text forKey:@"room"];
+    [_urlDictionary setValue:@"/uplook" forKey:@"room"];
     
     [[NSUserDefaults standardUserDefaults] setValue:_hostInputText.text forKey:@"kSocketIOHostName"];
     [[NSUserDefaults standardUserDefaults] setValue:_portInputText.text forKey:@"kSocketIOPortName"];
