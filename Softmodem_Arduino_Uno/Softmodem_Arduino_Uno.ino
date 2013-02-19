@@ -43,18 +43,23 @@ void loop() {
        if( 88 == check_byte_0 && 88 == check_byte_1 ) {
          int commandByte = buffer.get();
          if( 65 == commandByte ) { //65 = 'A' in asscii
-           int degX_h =  buffer.get();
-           int degX_l =  buffer.get();
-           int degY_h =  buffer.get();
-           int degY_l=  buffer.get();
+
+           char degX_h = buffer.get();
+           char degX_l =  buffer.get();
            
-           int degX = ( degX_h<<8 ) + degX_l;
-           int degY = ( degY_h<<8 ) + degY_l;
+           char degY_h =  buffer.get();
+           char degY_l=  buffer.get();
            
-           Serial.println("A received");
-           servo.write( map( degX, 0, 1024, 0, 180 ) );
+           byte degX = charToHex( degX_h ) * 16 + charToHex( degX_l );
+           
+           byte degY =  charToHex( degY_h ) * 16 + charToHex( degY_l ) ;
+
+           Serial.println("A received___ ");
+           servo.write( map( degX, 0, 256, 0, 180 ) );
+           
            Serial.println(degX);
            Serial.println(degY);
+           
            buffer.clear();
          } else if ( 66 == commandByte ) {//66 = 'B' in ascii
            Serial.println("B received");
@@ -69,4 +74,12 @@ void loop() {
     delay(100);
   }
 
+}
+
+byte charToHex(char c) {
+   if(c >= '0' && c <= '9'){
+     return (byte)(c - '0');
+   } else{
+     return (byte)(c-'A'+10);
+   }
 }

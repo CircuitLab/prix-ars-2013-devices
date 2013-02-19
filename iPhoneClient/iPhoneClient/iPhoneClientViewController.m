@@ -97,7 +97,7 @@ NSString * portNum = @"3000";
 	[analyzer addRecognizer:recognizer];
     self.serialTextField.delegate = self;
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:300.0f target:self selector:@selector(emitStatus:) userInfo:nil repeats:YES ];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:30.0f target:self selector:@selector(emitStatus:) userInfo:nil repeats:YES ];
     [self.timer fire];
 }
 
@@ -128,7 +128,7 @@ NSString * portNum = @"3000";
     NSDictionary *messageDictionary = [NSDictionary dictionaryWithObjectsAndKeys:valueText, @"value_id_1" , nil];
     [self.connector sendEventToUnicastServer:messageDictionary forEvent:@"slide_1"];
     
-    [self sendGenerator: [self buildPacketUint8:self.currentX y:self.currentY] ];
+    [self sendGenerator: [self buildPacket:self.currentX y:self.currentY] ];
 }
 
 - (IBAction)slideSecondSlider:(id)sender {
@@ -140,7 +140,7 @@ NSString * portNum = @"3000";
     NSDictionary *messageDictionary = [NSDictionary dictionaryWithObjectsAndKeys:valueText, @"value_id_2" , nil];
     [self.connector sendEventToUnicastServer:messageDictionary forEvent:@"slide_2"];
     
-    [self sendGenerator: [self buildPacketUint8:self.currentX y:self.currentY] ];
+    [self sendGenerator: [self buildPacket:self.currentX y:self.currentY] ];
 }
 
 #pragma mark - Node Connection Notification メソッド
@@ -181,7 +181,7 @@ NSString * portNum = @"3000";
                 self.pitchValueLabel.text = [NSString stringWithFormat:@"%f",self.currentY];
             }
             
-            [self sendGenerator: [self buildPacketUint8:self.currentX y:self.currentY] ];
+            [self sendGenerator: [self buildPacket:self.currentX y:self.currentY] ];
         }
     } else if([[notification name] isEqualToString:@"recivedTakeMessage"]){
             [self takePhoto];
@@ -211,41 +211,49 @@ NSString * portNum = @"3000";
 
 #pragma mark Softmodem 通信
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	//[self.generator writeByte:0xff];
+	
     int len;
     len = [textField.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-    [self.generator writeByte:112];
+    [self.generator writeByte:0xff];
 	[self.generator writeBytes:[textField.text UTF8String] length:len];
-    [self.generator writeByte:13];
 	textField.text = @"";
     [self.serialTextField endEditing:YES];
 	return YES;
 }
 
-- (void)sendGenerator:( UInt8* )string_ {
+- (void)sendGenerator:( NSString* )string_ {
     int len;
-    //len = [string_ lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    len = [string_ lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
     
     [self.generator writeByte:0xff];
-    [self.generator writeBytes:string_ length:7];
+    [self.generator writeBytes:[string_ UTF8String] length:len];
     
    // NSLog(@"%@",string_);
 }
 
 -(NSString*)buildPacket:(float)x y:(float)y {
     NSString *str = @"XXA";
+    int xInt, yInt;
+    NSString *xStr, *yStr;
+    xInt = (int)(x * 255);
+    yInt = (int)(y * 255);
     
-    unsigned char xValue_high;
-    unsigned char xValue_low;
-    unsigned char yValue_high;
-    unsigned char yValue_low;
+    if(xInt>=255)xInt = 254;
+    if(yInt>=255)yInt = 254;
     
-    xValue_high = (unsigned char)((int)(x*1024) >> 8 );
-    xValue_low = (unsigned char)((int)(x*1024) & 255 );
-    yValue_high = (unsigned char)((int)(y*1024) >> 8 );
-    yValue_low = (unsigned char)((int)(y*1024) & 255 );
-    
-    str = [NSString stringWithFormat:@"%@%c%c%c%c___%d_%d", str, xValue_high, xValue_low, yValue_high, yValue_low, (int)(x*1024), (int)(y*1024) ];
+    if( xInt < 16 ){
+        xStr = [NSString stringWithFormat:@"0%X", xInt];
+    } else {
+        xStr = [NSString stringWithFormat:@"%X", xInt];
+    }
+    if( yInt < 16 ){
+        yStr = [NSString stringWithFormat:@"0%X", yInt];
+    } else {
+        yStr = [NSString stringWithFormat:@"%X", yInt];
+    }
+
+    str = [NSString stringWithFormat:@"%@%@%@", str, xStr, yStr];
+    NSLog(@"send mode string __________ %@",str);
     return str;
 }
 
@@ -259,6 +267,7 @@ NSString * portNum = @"3000";
     str[4] = (UInt8)((int)(x*1024) & 255 );
     str[5] = (UInt8)((int)(y*1024) >> 8 );
     str[6] = (UInt8)((int)(y*1024) & 255 );
+
     return str;
 }
 
@@ -274,7 +283,7 @@ NSString * portNum = @"3000";
     [locationManager startUpdatingLocation];
     [locationManager startUpdatingHeading];
     
-     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 8 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
          [locationManager stopUpdatingHeading];
          [locationManager stopUpdatingLocation];
      });
