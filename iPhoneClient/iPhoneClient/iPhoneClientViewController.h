@@ -57,6 +57,8 @@
 
 @property (strong) NSTimer *timer;
 
+@property (assign) BOOL isBusy;
+
 -(void)initConnector;
 - (IBAction)slideFirstSlider:(id)sender;
 - (IBAction)slideSecondSlider:(id)sender;

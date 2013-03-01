@@ -48,6 +48,8 @@ NSString * portNum = @"3000";
 {
     [super viewDidLoad];
     
+    self.isBusy = false;
+    
     if (nil == locationManager) {
         locationManager = [[CLLocationManager alloc] init];
     }
@@ -190,7 +192,10 @@ NSString * portNum = @"3000";
 
 -(void) recivedTakeNotifivation:(NSNotification *)notification {
     if([[notification name] isEqualToString:@"recivedTakeMessage"]){
-        [self takePhoto];
+        if(!self.isBusy){
+            self.isBusy = true;
+            [self takePhoto];
+        }
     }
 }
 
@@ -402,7 +407,7 @@ NSString * portNum = @"3000";
                  }];
                 
                 [self.captureSession stopRunning];
-                
+                self.isBusy = false;
             });
         }
     } else {
