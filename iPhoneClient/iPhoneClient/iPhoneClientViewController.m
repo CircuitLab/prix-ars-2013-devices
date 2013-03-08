@@ -58,8 +58,8 @@ NSString * portNum = @"3000";
     locationManager.distanceFilter = kCLDistanceFilterNone; // 位置情報更新の目安距離
     locationManager.headingFilter = kCLHeadingFilterNone;
     
-    self.currentX = 0;
-    self.currentY = 0;
+    self.stepDirection = 0;
+    self.currentAngle = 0;
     
     [self updateCurrentCoordinate];
     
@@ -123,26 +123,26 @@ NSString * portNum = @"3000";
 #pragma mark - スライダコントローラアクション
 - (IBAction)slideFirstSlider:(id)sender {
     UISlider* slider = (UISlider*)sender;
-    NSString* valueText = [NSString stringWithFormat:@"%f",slider.value];
+    NSString* valueText = [NSString stringWithFormat:@"%d",(int)(slider.value * 255)];
     self.panValueLabel.text = valueText;
-    self.currentX = [valueText floatValue];
+    self.stepDirection = [valueText intValue];
 
     NSDictionary *messageDictionary = [NSDictionary dictionaryWithObjectsAndKeys:valueText, @"value_id_1" , nil];
     [self.connector sendEventToUnicastServer:messageDictionary forEvent:@"slide_1"];
     
-    [self sendGenerator: [self buildPacket:self.currentX y:self.currentY] ];
+    [self sendGenerator: [self buildPacket:self.stepDirection y:self.currentAngle] ];
 }
 
 - (IBAction)slideSecondSlider:(id)sender {
     UISlider* slider = (UISlider*)sender;
-    NSString* valueText = [NSString stringWithFormat:@"%f",slider.value];
+    NSString* valueText = [NSString stringWithFormat:@"%d",(int)(slider.value *  255)];
     self.pitchValueLabel.text = valueText;
-    self.currentY = [valueText floatValue];
+    self.currentAngle = [valueText intValue];
     
     NSDictionary *messageDictionary = [NSDictionary dictionaryWithObjectsAndKeys:valueText, @"value_id_2" , nil];
     [self.connector sendEventToUnicastServer:messageDictionary forEvent:@"slide_2"];
     
-    [self sendGenerator: [self buildPacket:self.currentX y:self.currentY] ];
+    [self sendGenerator: [self buildPacket:self.stepDirection y:self.currentAngle] ];
 }
 
 #pragma mark - Node Connection Notification メソッド
@@ -173,17 +173,17 @@ NSString * portNum = @"3000";
         NSDictionary *position = [NSDictionary dictionaryWithDictionary:[notification userInfo]];
         if( position > 0 ){
             
-            if( nil != [position objectForKey:@"x"] ) {
-                self.currentX = [[position objectForKey:@"x"] floatValue];
-                self.pitchValueLabel.text = [NSString stringWithFormat:@"%f",self.currentX];
+            if( nil != [position objectForKey:@"compass"] ) {
+                self.stepDirection = [[position objectForKey:@"compass"] floatValue];
+                self.pitchValueLabel.text = [NSString stringWithFormat:@"%d",self.stepDirection];
                 
             }
-            if( nil != [position objectForKey:@"y"] ) {
-                self.currentY = [[position objectForKey:@"y"] floatValue];
-                self.pitchValueLabel.text = [NSString stringWithFormat:@"%f",self.currentY];
+            if( nil != [position objectForKey:@"angle"] ) {
+                self.currentAngle = [[position objectForKey:@"y"] floatValue];
+                self.pitchValueLabel.text = [NSString stringWithFormat:@"%f",self.currentAngle];
             }
             
-            [self sendGenerator: [self buildPacket:self.currentX y:self.currentY] ];
+            [self sendGenerator: [self buildPacket:self.stepDirection y:self.currentAngle] ];
         }
     } else if([[notification name] isEqualToString:@"recivedTakeMessage"]){
             [self takePhoto];
@@ -236,12 +236,12 @@ NSString * portNum = @"3000";
    // NSLog(@"%@",string_);
 }
 
--(NSString*)buildPacket:(float)x y:(float)y {
+-(NSString*)buildPacket:(int)x y:(int)y {
     NSString *str = @"XXA";
     int xInt, yInt;
     NSString *xStr, *yStr;
-    xInt = (int)(x * 255);
-    yInt = (int)(y * 255);
+    xInt = (int)x;
+    yInt = (int)y;
     
     if(xInt>=255)xInt = 254;
     if(yInt>=255)yInt = 254;
@@ -262,7 +262,7 @@ NSString * portNum = @"3000";
     return str;
 }
 
--(UInt8 *)buildPacketUint8:(float)x y:(float)y {
+-(UInt8 *)buildPacketUint8:(int)x y:(int)y {
     UInt8 str[7];
     str[0] = 'X';
     str[1] = 'X';
@@ -456,8 +456,9 @@ NSString * portNum = @"3000";
     requestDict.photo = [data_ base64];
     requestDict.udid = [[UIDevice currentDevice] uniqueIdentifier];
     requestDict.timestamp = [[NSDate date]description]; //フォーマットした方がいい
-    requestDict.x = [NSString stringWithFormat:@"%f", self.currentX];
-    requestDict.y = [NSString stringWithFormat:@"%f", self.currentY];
+    requestDict.compass = [NSString stringWithFormat:@"%f",self.currentDirection];
+    //requestDict.x = [NSString stringWithFormat:@"%f", self.currentX];
+    requestDict.angle = [NSString stringWithFormat:@"%d", self.currentAngle];
     requestDict.battery = [NSString stringWithFormat:@"%@",parcentOfBattery];
     
     NSString *urlString = [NSString stringWithFormat:@"http://%@:%@/photos", hostname, portNum];
@@ -475,8 +476,8 @@ NSString * portNum = @"3000";
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         
         [dict setValue:[[UIDevice currentDevice] uniqueIdentifier] forKey:@"udid"];
-        [dict setValue:[NSNumber numberWithFloat:self.currentX] forKey:@"x"];
-        [dict setValue:[NSNumber numberWithFloat:self.currentY] forKey:@"y"];
+        //[dict setValue:[NSNumber numberWithFloat:self.currentX] forKey:@"x"];
+        [dict setValue:[NSNumber numberWithFloat:self.currentAngle] forKey:@"angle"];
         [UIDevice currentDevice].batteryMonitoringEnabled = YES;
         float battery = [UIDevice currentDevice].batteryLevel;
         NSNumber *parcentOfBattery;

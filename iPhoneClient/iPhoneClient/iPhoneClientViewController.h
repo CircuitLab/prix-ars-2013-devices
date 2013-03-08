@@ -23,8 +23,9 @@
 @property Base64 *photo;
 @property NSString *udid;
 @property NSString *timestamp;
-@property NSString *x;
-@property NSString *y;
+@property NSString *compass;
+//@property NSString *x;
+@property NSString *angle;
 @property NSString *battery;
 
 @end
@@ -53,7 +54,7 @@
 @property (assign) CLLocationDirection currentDirection;
 
 @property double longtitude, latitude;
-@property float currentX, currentY;
+@property int stepDirection, currentAngle;
 
 @property (strong) NSTimer *timer;
 
@@ -65,8 +66,8 @@
 - (IBAction)capture:(id)sender;
 - (void) receiveSetUrlNotification:(NSNotification *)notification;
 
-- (NSString*)buildPacket:(float)x y:(float)y;
-- (UInt8 *)buildPacketUint8:(float)x y:(float)y;
+- (NSString*)buildPacket:(int)x y:(int)y;
+- (UInt8 *)buildPacketUint8:(int)x y:(int)y;
 
 - (void)emitStatus:(NSTimer*)timer;
 
